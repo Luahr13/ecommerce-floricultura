@@ -15,6 +15,7 @@ import javax.ws.rs.NotFoundException;
 import br.luahr.topicos1.dto.MunicipioDTO;
 import br.luahr.topicos1.dto.MunicipioResponseDTO;
 import br.luahr.topicos1.model.Municipio;
+import br.luahr.topicos1.repository.EstadoRepository;
 import br.luahr.topicos1.repository.MunicipioRepository;
 
 @ApplicationScoped
@@ -22,6 +23,9 @@ public class MunicipioImplService implements MunicipioService{
 
     @Inject
     MunicipioRepository municipioRepository;
+
+    @Inject
+    EstadoRepository estadoRepository;
 
     @Inject
     Validator validator;
@@ -50,7 +54,7 @@ public class MunicipioImplService implements MunicipioService{
 
         Municipio entity = new Municipio();
         entity.setNome(municipioDTO.nome());
-        entity.setEstado(municipioDTO.idEstado());
+        entity.setEstado(estadoRepository.findById(municipioDTO.idEstado()));
 
         municipioRepository.persist(entity);
 
@@ -65,7 +69,7 @@ public class MunicipioImplService implements MunicipioService{
 
         Municipio entity = new Municipio();
         entity.setNome(municipioDTO.nome());
-        entity.setEstado(municipioDTO.idEstado());
+        entity.setEstado(estadoRepository.findById(municipioDTO.idEstado()));
 
         return new MunicipioResponseDTO(entity);
     }

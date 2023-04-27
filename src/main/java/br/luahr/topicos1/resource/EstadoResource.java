@@ -26,7 +26,7 @@ import br.luahr.topicos1.service.EstadoService;
 @Produces(MediaType.APPLICATION_JSON)
 public class EstadoResource {
     @Inject
-    private EstadoService estadoService;
+    EstadoService estadoService;
 
     @GET
     public List<EstadoResponseDTO> getAll() {

@@ -9,12 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente extends DefaultEntity{
-    @Column(length = 50)
     private String nome;
 
     @Column(length = 14)
@@ -29,15 +29,17 @@ public class Cliente extends DefaultEntity{
     private Sexo sexo;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private Telefone telefones;
+    private List<Telefone> telefone = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private Endereco enderecos;
+    private List<Endereco> endereco = new ArrayList<>();
 
     //Relacionamento para lista de desejos
     @ManyToMany
-    @JoinColumn(name = "id_flor")
-    private List<Flor> flores = new ArrayList<>();
+    @JoinTable(name = "cliente_flor",
+        joinColumns = @JoinColumn(name = "id_cliente"),
+        inverseJoinColumns = @JoinColumn(name = "id_flor"))
+    private List<Flor> flor = new ArrayList<>();
 
     public String getNome() {
         return nome;
@@ -67,6 +69,10 @@ public class Cliente extends DefaultEntity{
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Sexo getSexo() {
         return sexo;
     }
@@ -75,31 +81,28 @@ public class Cliente extends DefaultEntity{
         this.sexo = sexo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public List<Telefone> getTelefone() {
+        return telefone;
     }
 
-    public Telefone getTelefones() {
-        return telefones;
+    public void setTelefone(List<Telefone> telefone) {
+        this.telefone = telefone;
+    }
+
+    public List<Endereco> getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(List<Endereco> endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<Flor> getFlor() {
+        return flor;
+    }
+
+    public void setFlor(List<Flor> flor) {
+        this.flor = flor;
     }
     
-    public void setTelefones(Telefone telefones) {
-        this.telefones = telefones;
-    }
-    
-    public Endereco getEnderecos() {
-        return enderecos;
-    }
-    
-    public void setEnderecos(Endereco enderecos) {
-        this.enderecos = enderecos;
-    }
-    
-    public List<Flor> getFlores() {
-        return flores;
-    }
-    
-    public void setFlores(List<Flor> flores) {
-        this.flores = flores;
-    }
 }

@@ -26,7 +26,7 @@ import br.luahr.topicos1.service.FlorService;
 @Produces(MediaType.APPLICATION_JSON)
 public class FlorResource {
     @Inject
-    private FlorService florService;
+    FlorService florService;
 
     @GET
     public List<FlorResponseDTO> getAll() {

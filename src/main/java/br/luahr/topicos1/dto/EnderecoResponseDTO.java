@@ -1,13 +1,14 @@
 package br.luahr.topicos1.dto;
 
 import br.luahr.topicos1.model.Endereco;
+import br.luahr.topicos1.model.Municipio;
 
 public record EnderecoResponseDTO(
     String bairro,
     String numero,
     String complemento,
     String cep,
-    MunicipioResponseDTO municipio
+    Municipio municipio
 ) {
     public EnderecoResponseDTO(Endereco endereco) {
         this(
@@ -15,8 +16,7 @@ public record EnderecoResponseDTO(
             endereco.getNumero(),
             endereco.getComplemento(),
             endereco.getCep(),
-            new MunicipioResponseDTO(endereco.getMunicipio())
+           endereco.getMunicipio()
         );
     }
 }
-

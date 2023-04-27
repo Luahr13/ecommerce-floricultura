@@ -1,5 +1,6 @@
 package br.luahr.topicos1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,14 +16,24 @@ import javax.ws.rs.NotFoundException;
 import br.luahr.topicos1.dto.ClienteDTO;
 import br.luahr.topicos1.dto.ClienteResponseDTO;
 import br.luahr.topicos1.model.Cliente;
+import br.luahr.topicos1.model.Endereco;
 import br.luahr.topicos1.model.Sexo;
+import br.luahr.topicos1.model.Telefone;
 import br.luahr.topicos1.repository.ClienteRepository;
+import br.luahr.topicos1.repository.EnderecoRepository;
+import br.luahr.topicos1.repository.TelefoneRepository;
 
 @ApplicationScoped
 public class ClienteImplService implements ClienteService{
 
     @Inject
     ClienteRepository clienteRepository;
+
+    @Inject
+    TelefoneRepository telefoneRepository;
+
+    @Inject
+    EnderecoRepository enderecoRepository;
 
     @Inject
     Validator validator;
@@ -55,8 +66,14 @@ public class ClienteImplService implements ClienteService{
         entity.setSenha(clienteDTO.senha());
         entity.setEmail(clienteDTO.email());
         entity.setSexo(Sexo.valueOf(clienteDTO.sexo()));
-        entity.setTelefones(clienteDTO.telefone());
-        entity.setEnderecos(clienteDTO.endereco());
+
+        List<Telefone> telefoneList = new ArrayList<>();
+        telefoneList.add(telefoneRepository.findById(clienteDTO.telefone()));
+        entity.setTelefone(telefoneList);
+
+        List<Endereco> enderecoList = new ArrayList<>();
+        enderecoList.add(enderecoRepository.findById(clienteDTO.endereco()));
+        entity.setEndereco(enderecoList);
 
         clienteRepository.persist(entity);
 
@@ -74,8 +91,16 @@ public class ClienteImplService implements ClienteService{
         entity.setSenha(clienteDTO.senha());
         entity.setEmail(clienteDTO.email());
         entity.setSexo(Sexo.valueOf(clienteDTO.sexo()));
-        entity.setTelefones(clienteDTO.telefone());
-        entity.setEnderecos(clienteDTO.endereco());
+        
+        List<Telefone> telefoneList = new ArrayList<>();
+        telefoneList.add(telefoneRepository.findById(clienteDTO.telefone()));
+        entity.setTelefone(telefoneList);
+
+        List<Endereco> enderecoList = new ArrayList<>();
+        enderecoList.add(enderecoRepository.findById(clienteDTO.endereco()));
+        entity.setEndereco(enderecoList);
+
+        clienteRepository.persist(entity);
 
         return new ClienteResponseDTO(entity);
     }

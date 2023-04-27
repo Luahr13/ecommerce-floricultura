@@ -26,7 +26,7 @@ import br.luahr.topicos1.service.TelefoneService;
 @Produces(MediaType.APPLICATION_JSON)
 public class TelefoneResource {
     @Inject
-    private TelefoneService telefoneService;
+    TelefoneService telefoneService;
 
     @GET
     public List<TelefoneResponseDTO> getAll() {

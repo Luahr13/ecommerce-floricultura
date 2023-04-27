@@ -26,7 +26,7 @@ import br.luahr.topicos1.service.MunicipioService;
 @Produces(MediaType.APPLICATION_JSON)
 public class MunicipioResource {
     @Inject
-    private MunicipioService municipioService;
+    MunicipioService municipioService;
 
     @GET
     public List<MunicipioResponseDTO> getAll() {

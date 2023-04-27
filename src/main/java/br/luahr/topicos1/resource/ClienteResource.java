@@ -27,7 +27,7 @@ import br.luahr.topicos1.service.ClienteService;
 public class ClienteResource {
 
     @Inject
-    private ClienteService clienteService;
+    ClienteService clienteService;
 
     @GET
     public List<ClienteResponseDTO> getAll() {

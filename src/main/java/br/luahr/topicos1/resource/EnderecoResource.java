@@ -26,7 +26,7 @@ import br.luahr.topicos1.service.EnderecoService;
 @Produces(MediaType.APPLICATION_JSON)
 public class EnderecoResource {
     @Inject
-    private EnderecoService enderecoService;
+    EnderecoService enderecoService;
 
     @GET
     public List<EnderecoResponseDTO> getAll() {

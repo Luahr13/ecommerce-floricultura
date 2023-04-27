@@ -16,11 +16,15 @@ import br.luahr.topicos1.dto.EnderecoDTO;
 import br.luahr.topicos1.dto.EnderecoResponseDTO;
 import br.luahr.topicos1.model.Endereco;
 import br.luahr.topicos1.repository.EnderecoRepository;
+import br.luahr.topicos1.repository.MunicipioRepository;
 
 @ApplicationScoped
 public class EnderecoImplService implements EnderecoService{
     @Inject
     EnderecoRepository enderecoRepository;
+
+    @Inject
+    MunicipioRepository municipioRepository;
 
     @Inject
     Validator validator;
@@ -51,7 +55,7 @@ public class EnderecoImplService implements EnderecoService{
         entity.setBairro(enderecoDTO.bairro());
         entity.setNumero(enderecoDTO.numero());
         entity.setComplemento(enderecoDTO.complemento());
-        entity.setMunicipio(enderecoDTO.municipio());
+        entity.setMunicipio(municipioRepository.findById(enderecoDTO.municipio()));
 
         enderecoRepository.persist(entity);
 
@@ -68,7 +72,7 @@ public class EnderecoImplService implements EnderecoService{
         entity.setBairro(enderecoDTO.bairro());
         entity.setNumero(enderecoDTO.numero());
         entity.setComplemento(enderecoDTO.complemento());
-        entity.setMunicipio(enderecoDTO.municipio());
+        entity.setMunicipio(municipioRepository.findById(enderecoDTO.municipio()));
 
 
         return new EnderecoResponseDTO(entity);

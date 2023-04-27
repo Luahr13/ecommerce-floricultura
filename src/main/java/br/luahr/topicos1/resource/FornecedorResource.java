@@ -26,7 +26,7 @@ import br.luahr.topicos1.service.FornecedorService;
 @Produces(MediaType.APPLICATION_JSON)
 public class FornecedorResource {
     @Inject
-    private FornecedorService fornecedorService;
+    FornecedorService fornecedorService;
 
     @GET
     public List<FornecedorResponseDTO> getAll() {
