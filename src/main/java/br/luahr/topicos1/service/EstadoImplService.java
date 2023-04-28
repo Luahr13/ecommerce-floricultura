@@ -62,7 +62,7 @@ public class EstadoImplService implements EstadoService{
     public EstadoResponseDTO update(Long id, EstadoDTO estadoDTO) throws ConstraintViolationException{
         validar(estadoDTO);
 
-        Estado entity = new Estado();
+        Estado entity = estadoRepository.findById(id);
         entity.setNome(estadoDTO.nome());
         entity.setSigla(estadoDTO.sigla());
 

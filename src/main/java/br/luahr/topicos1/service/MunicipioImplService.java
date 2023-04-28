@@ -14,6 +14,7 @@ import javax.ws.rs.NotFoundException;
 
 import br.luahr.topicos1.dto.MunicipioDTO;
 import br.luahr.topicos1.dto.MunicipioResponseDTO;
+import br.luahr.topicos1.model.Estado;
 import br.luahr.topicos1.model.Municipio;
 import br.luahr.topicos1.repository.EstadoRepository;
 import br.luahr.topicos1.repository.MunicipioRepository;
@@ -52,9 +53,11 @@ public class MunicipioImplService implements MunicipioService{
     public MunicipioResponseDTO create(MunicipioDTO municipioDTO) throws ConstraintViolationException{
         validar(municipioDTO);
 
-        Municipio entity = new Municipio();
+        var entity = new Municipio();
         entity.setNome(municipioDTO.nome());
-        entity.setEstado(estadoRepository.findById(municipioDTO.idEstado()));
+        
+        entity.setEstado(new Estado());
+        entity.getEstado().setId(municipioDTO.idEstado());
 
         municipioRepository.persist(entity);
 
@@ -67,9 +70,11 @@ public class MunicipioImplService implements MunicipioService{
     public MunicipioResponseDTO update(Long id, MunicipioDTO municipioDTO) throws ConstraintViolationException{
         validar(municipioDTO);
 
-        Municipio entity = new Municipio();
+        var entity = municipioRepository.findById(id);
         entity.setNome(municipioDTO.nome());
-        entity.setEstado(estadoRepository.findById(municipioDTO.idEstado()));
+        if(!municipioDTO.idEstado().equals(entity.getEstado().getId()) ){
+        entity.getEstado().setId(municipioDTO.idEstado());;
+        }
 
         return new MunicipioResponseDTO(entity);
     }
@@ -89,7 +94,7 @@ public class MunicipioImplService implements MunicipioService{
         if (id == null){
             throw new IllegalArgumentException("Número inválido");
         }
-        Municipio municipio = municipioRepository.findById(id);
+        var municipio = municipioRepository.findById(id);
 
         if (municipioRepository.isPersistent(municipio)){
             municipioRepository.delete(municipio);
@@ -102,11 +107,11 @@ public class MunicipioImplService implements MunicipioService{
         List<Municipio> list = municipioRepository.findByNome(nome);
 
         if (list == null)
-            throw new NullPointerException("nenhum usuario encontrado");
+            throw new NullPointerException("nenhum município encontrado");
 
         return list.stream()
-                    .map(MunicipioResponseDTO::new)
-                    .collect(Collectors.toList());
+                        .map(MunicipioResponseDTO::new)
+                        .collect(Collectors.toList());
     }
 
     @Override

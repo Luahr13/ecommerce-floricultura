@@ -21,7 +21,7 @@ import br.luahr.topicos1.dto.FornecedorDTO;
 import br.luahr.topicos1.dto.FornecedorResponseDTO;
 import br.luahr.topicos1.service.FornecedorService;
 
-@Path("/clientes")
+@Path("/fornecedores")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class FornecedorResource {

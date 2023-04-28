@@ -62,7 +62,7 @@ public class TelefoneImplService implements TelefoneService{
     public TelefoneResponseDTO update(Long id, TelefoneDTO telefoneDTO) throws ConstraintViolationException{
         validar(telefoneDTO);
 
-        Telefone entity = new Telefone();
+        Telefone entity = telefoneRepository.findById(id);
         entity.setCodigoArea(telefoneDTO.codigoArea());
         entity.setNumero(telefoneDTO.numero());
 

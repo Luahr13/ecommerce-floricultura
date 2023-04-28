@@ -21,7 +21,7 @@ import br.luahr.topicos1.dto.EstadoDTO;
 import br.luahr.topicos1.dto.EstadoResponseDTO;
 import br.luahr.topicos1.service.EstadoService;
 
-@Path("/clientes")
+@Path("/estados")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EstadoResource {
@@ -58,8 +58,8 @@ public class EstadoResource {
     @Transactional
     public Response update(@PathParam("id") Long id, EstadoDTO estadoDTO) {
         try {
-            EstadoResponseDTO estado = estadoService.update(id, estadoDTO);
-            return Response.ok(estado).build();
+            estadoService.update(id, estadoDTO);
+            return Response.status(Status.NO_CONTENT).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();

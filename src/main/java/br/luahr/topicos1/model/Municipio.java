@@ -2,22 +2,28 @@ package br.luahr.topicos1.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
 public class Municipio extends DefaultEntity{
+    
+    @Column(nullable = false)
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "id_estado")
+    @JoinColumn(name = "id_estado", nullable = false)
     private Estado estado;
 
     @OneToMany(mappedBy = "municipio")
+    @JsonIgnore
     private List<Endereco> enderecos;
 
     public List<Endereco> getEnderecos() {

@@ -21,7 +21,7 @@ import br.luahr.topicos1.dto.FlorDTO;
 import br.luahr.topicos1.dto.FlorResponseDTO;
 import br.luahr.topicos1.service.FlorService;
 
-@Path("/clientes")
+@Path("/flores")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class FlorResource {

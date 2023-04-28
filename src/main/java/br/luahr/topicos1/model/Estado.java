@@ -1,5 +1,6 @@
 package br.luahr.topicos1.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ public class Estado extends DefaultEntity{
     private String sigla;
 
     @OneToMany(mappedBy = "estado")
-    private List<Municipio> municipios;
+    private List<Municipio> municipios = new ArrayList<>();
 
     public String getNome() {
         return nome;
@@ -33,14 +34,6 @@ public class Estado extends DefaultEntity{
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
-    }
-
-    public List<Municipio> getMunicipios() {
-        return municipios;
-    }
-
-    public void setMunicipios(List<Municipio> municipios) {
-        this.municipios = municipios;
     }
 
 }

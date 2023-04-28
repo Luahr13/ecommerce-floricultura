@@ -2,7 +2,7 @@ package br.luahr.topicos1.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
@@ -11,7 +11,7 @@ public class Telefone extends DefaultEntity{
     private String codigoArea;
     private String numero;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 

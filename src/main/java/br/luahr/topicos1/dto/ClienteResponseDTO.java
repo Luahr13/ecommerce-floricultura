@@ -1,7 +1,5 @@
 package br.luahr.topicos1.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.luahr.topicos1.model.Cliente;
@@ -18,8 +16,8 @@ public record ClienteResponseDTO(
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Sexo sexo,
 
-    List<Telefone> telefone,
-    List<Endereco> endereco
+    Telefone telefone,
+    Endereco endereco
 ) {
     public ClienteResponseDTO(Cliente cliente){
         this(

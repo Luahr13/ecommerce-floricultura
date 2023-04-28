@@ -15,6 +15,7 @@ import javax.ws.rs.NotFoundException;
 import br.luahr.topicos1.dto.EnderecoDTO;
 import br.luahr.topicos1.dto.EnderecoResponseDTO;
 import br.luahr.topicos1.model.Endereco;
+import br.luahr.topicos1.model.Municipio;
 import br.luahr.topicos1.repository.EnderecoRepository;
 import br.luahr.topicos1.repository.MunicipioRepository;
 
@@ -55,7 +56,9 @@ public class EnderecoImplService implements EnderecoService{
         entity.setBairro(enderecoDTO.bairro());
         entity.setNumero(enderecoDTO.numero());
         entity.setComplemento(enderecoDTO.complemento());
-        entity.setMunicipio(municipioRepository.findById(enderecoDTO.municipio()));
+        entity.setCep(enderecoDTO.cep());
+        entity.setMunicipio(new Municipio());
+        entity.getMunicipio().setId(enderecoDTO.idMunicipio());
 
         enderecoRepository.persist(entity);
 
@@ -68,11 +71,14 @@ public class EnderecoImplService implements EnderecoService{
     public EnderecoResponseDTO update(Long id, EnderecoDTO enderecoDTO)  throws ConstraintViolationException{
         validar(enderecoDTO);
 
-        Endereco entity = new Endereco();
+        var entity = enderecoRepository.findById(id);
         entity.setBairro(enderecoDTO.bairro());
         entity.setNumero(enderecoDTO.numero());
         entity.setComplemento(enderecoDTO.complemento());
-        entity.setMunicipio(municipioRepository.findById(enderecoDTO.municipio()));
+        entity.setCep(enderecoDTO.cep());
+        if(!enderecoDTO.idMunicipio().equals(entity.getMunicipio().getId())){
+            entity.getMunicipio().setId(enderecoDTO.idMunicipio());
+        }
 
 
         return new EnderecoResponseDTO(entity);
@@ -106,11 +112,11 @@ public class EnderecoImplService implements EnderecoService{
         List<Endereco> list = enderecoRepository.findByNome(nome);
 
         if (list == null)
-            throw new NullPointerException("nenhum usuario encontrado");
+            throw new NullPointerException("nenhum endereço encontrado");
 
         return list.stream()
-                    .map(EnderecoResponseDTO::new)
-                    .collect(Collectors.toList());
+                        .map(EnderecoResponseDTO::new)
+                        .collect(Collectors.toList());
     }
 
     @Override

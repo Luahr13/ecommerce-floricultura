@@ -1,6 +1,5 @@
 package br.luahr.topicos1.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,10 +20,11 @@ import br.luahr.topicos1.model.Sexo;
 import br.luahr.topicos1.model.Telefone;
 import br.luahr.topicos1.repository.ClienteRepository;
 import br.luahr.topicos1.repository.EnderecoRepository;
+import br.luahr.topicos1.repository.MunicipioRepository;
 import br.luahr.topicos1.repository.TelefoneRepository;
 
 @ApplicationScoped
-public class ClienteImplService implements ClienteService{
+public class ClienteImplService implements ClienteService {
 
     @Inject
     ClienteRepository clienteRepository;
@@ -34,6 +34,9 @@ public class ClienteImplService implements ClienteService{
 
     @Inject
     EnderecoRepository enderecoRepository;
+
+    @Inject
+    MunicipioRepository municipioRepository;
 
     @Inject
     Validator validator;
@@ -49,7 +52,7 @@ public class ClienteImplService implements ClienteService{
     @Override
     public ClienteResponseDTO findById(Long id) {
         Cliente cliente = clienteRepository.findById(id);
-        if (cliente == null){
+        if (cliente == null) {
             throw new NotFoundException("Não encontrado");
         }
         return new ClienteResponseDTO(cliente);
@@ -65,16 +68,15 @@ public class ClienteImplService implements ClienteService{
         entity.setCpf(clienteDTO.cpf());
         entity.setSenha(clienteDTO.senha());
         entity.setEmail(clienteDTO.email());
-        entity.setSexo(Sexo.valueOf(clienteDTO.sexo()));
 
-        List<Telefone> telefoneList = new ArrayList<>();
-        telefoneList.add(telefoneRepository.findById(clienteDTO.telefone()));
-        entity.setTelefone(telefoneList);
+        entity.setSexo(Sexo.valueOf(clienteDTO.idSexo())); //Seta sexo
 
-        List<Endereco> enderecoList = new ArrayList<>();
-        enderecoList.add(enderecoRepository.findById(clienteDTO.endereco()));
-        entity.setEndereco(enderecoList);
+        Telefone telefone = telefoneRepository.findById(clienteDTO.idTelefone());
+        entity.setTelefone(telefone);
 
+        Endereco endereco = enderecoRepository.findById(clienteDTO.idEndereco());
+        entity.setEndereco(endereco);
+        
         clienteRepository.persist(entity);
 
         return new ClienteResponseDTO(entity);
@@ -82,29 +84,28 @@ public class ClienteImplService implements ClienteService{
 
     @Override
     @Transactional
-    public ClienteResponseDTO update(Long id, ClienteDTO clienteDTO) throws ConstraintViolationException{
+    public ClienteResponseDTO update(Long id, ClienteDTO clienteDTO) throws ConstraintViolationException {
         validar(clienteDTO);
-   
-        Cliente entity = new Cliente();
+
+        Cliente entity = clienteRepository.findById(id);
         entity.setNome(clienteDTO.nome());
         entity.setCpf(clienteDTO.cpf());
         entity.setSenha(clienteDTO.senha());
         entity.setEmail(clienteDTO.email());
-        entity.setSexo(Sexo.valueOf(clienteDTO.sexo()));
-        
-        List<Telefone> telefoneList = new ArrayList<>();
-        telefoneList.add(telefoneRepository.findById(clienteDTO.telefone()));
-        entity.setTelefone(telefoneList);
 
-        List<Endereco> enderecoList = new ArrayList<>();
-        enderecoList.add(enderecoRepository.findById(clienteDTO.endereco()));
-        entity.setEndereco(enderecoList);
+        entity.setSexo(Sexo.valueOf(clienteDTO.idSexo()));
+
+        if(!clienteDTO.idTelefone().equals(entity.getTelefone().getId())){
+            entity.getTelefone().setId(clienteDTO.idTelefone());
+        }
+        if(!clienteDTO.idEndereco().equals(entity.getEndereco().getId())){
+            entity.getEndereco().setId(clienteDTO.idEndereco());
+        }
 
         clienteRepository.persist(entity);
 
         return new ClienteResponseDTO(entity);
     }
-
 
     private void validar(ClienteDTO clienteDTO) throws ConstraintViolationException {
 
@@ -117,28 +118,28 @@ public class ClienteImplService implements ClienteService{
 
     @Override
     @Transactional
-    public void delete(Long id) throws IllegalArgumentException, NotFoundException{
+    public void delete(Long id) throws IllegalArgumentException, NotFoundException {
         if (id == null)
             throw new IllegalArgumentException("Número inválido");
 
         Cliente cliente = clienteRepository.findById(id);
 
-        if (clienteRepository.isPersistent(cliente)){
+        if (clienteRepository.isPersistent(cliente)) {
             clienteRepository.delete(cliente);
-        }else
+        } else
             throw new NotFoundException("Nenhum usuario encontrado");
     }
 
     @Override
-    public List<ClienteResponseDTO> findByNome(String nome) throws NullPointerException{
+    public List<ClienteResponseDTO> findByNome(String nome) throws NullPointerException {
         List<Cliente> list = clienteRepository.findByNome(nome);
 
         if (list == null)
             throw new NullPointerException("nenhum usuario encontrado");
 
         return list.stream()
-                    .map(ClienteResponseDTO::new)
-                    .collect(Collectors.toList());
+                        .map(ClienteResponseDTO::new)
+                        .collect(Collectors.toList());
     }
 
     @Override

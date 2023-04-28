@@ -21,7 +21,7 @@ import br.luahr.topicos1.dto.EnderecoDTO;
 import br.luahr.topicos1.dto.EnderecoResponseDTO;
 import br.luahr.topicos1.service.EnderecoService;
 
-@Path("/clientes")
+@Path("/enderecos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class EnderecoResource {

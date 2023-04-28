@@ -21,7 +21,7 @@ import br.luahr.topicos1.dto.MunicipioDTO;
 import br.luahr.topicos1.dto.MunicipioResponseDTO;
 import br.luahr.topicos1.service.MunicipioService;
 
-@Path("/clientes")
+@Path("/municipios")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MunicipioResource {

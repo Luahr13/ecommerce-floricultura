@@ -3,7 +3,6 @@ package br.luahr.topicos1.dto;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -25,15 +24,15 @@ public record ClienteDTO(
     String email,
 
     @NotNull(message = "O campo precisa ser preenchido.")
-    Integer sexo,
+    Integer idSexo,
 
     @Valid
-    @NotEmpty(message = "Pelo menos um telefone precisa ser informado.")
-    Long telefone,
+    @NotNull(message = "Pelo menos um telefone precisa ser informado.")
+    Long idTelefone,
 
     @Valid
-    @NotEmpty(message = "Pelo menos um telefone precisa ser informado.")
-    Long endereco
+    @NotNull(message = "Pelo menos um telefone precisa ser informado.")
+    Long idEndereco
 ) {
     
 }

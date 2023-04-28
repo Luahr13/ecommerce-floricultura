@@ -11,9 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Cliente extends DefaultEntity{
     private String nome;
 
@@ -28,11 +30,11 @@ public class Cliente extends DefaultEntity{
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Telefone> telefone = new ArrayList<>();
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private Telefone telefone;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Endereco> endereco = new ArrayList<>();
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private Endereco endereco;
 
     //Relacionamento para lista de desejos
     @ManyToMany
@@ -40,6 +42,22 @@ public class Cliente extends DefaultEntity{
         joinColumns = @JoinColumn(name = "id_cliente"),
         inverseJoinColumns = @JoinColumn(name = "id_flor"))
     private List<Flor> flor = new ArrayList<>();
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
     public String getNome() {
         return nome;
@@ -79,22 +97,6 @@ public class Cliente extends DefaultEntity{
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
-    }
-
-    public List<Telefone> getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(List<Telefone> telefone) {
-        this.telefone = telefone;
-    }
-
-    public List<Endereco> getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(List<Endereco> endereco) {
-        this.endereco = endereco;
     }
 
     public List<Flor> getFlor() {

@@ -21,7 +21,7 @@ import br.luahr.topicos1.dto.TelefoneDTO;
 import br.luahr.topicos1.dto.TelefoneResponseDTO;
 import br.luahr.topicos1.service.TelefoneService;
 
-@Path("/clientes")
+@Path("/telefones")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class TelefoneResource {
