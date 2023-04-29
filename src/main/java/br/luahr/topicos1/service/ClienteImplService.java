@@ -63,19 +63,17 @@ public class ClienteImplService implements ClienteService {
     public ClienteResponseDTO create(ClienteDTO clienteDTO) throws ConstraintViolationException {
         validar(clienteDTO);
 
-        Cliente entity = new Cliente();
+        var entity = new Cliente();
         entity.setNome(clienteDTO.nome());
         entity.setCpf(clienteDTO.cpf());
-        entity.setSenha(clienteDTO.senha());
-        entity.setEmail(clienteDTO.email());
 
         entity.setSexo(Sexo.valueOf(clienteDTO.idSexo())); //Seta sexo
 
-        Telefone telefone = telefoneRepository.findById(clienteDTO.idTelefone());
-        entity.setTelefone(telefone);
+        entity.setTelefone(new Telefone());
+        entity.getTelefone().setId(clienteDTO.telefone());
 
-        Endereco endereco = enderecoRepository.findById(clienteDTO.idEndereco());
-        entity.setEndereco(endereco);
+        entity.setEndereco(new Endereco());
+        entity.getEndereco().setId(clienteDTO.telefone());
         
         clienteRepository.persist(entity);
 
@@ -87,22 +85,18 @@ public class ClienteImplService implements ClienteService {
     public ClienteResponseDTO update(Long id, ClienteDTO clienteDTO) throws ConstraintViolationException {
         validar(clienteDTO);
 
-        Cliente entity = clienteRepository.findById(id);
+        var entity = clienteRepository.findById(id);
         entity.setNome(clienteDTO.nome());
         entity.setCpf(clienteDTO.cpf());
-        entity.setSenha(clienteDTO.senha());
-        entity.setEmail(clienteDTO.email());
 
         entity.setSexo(Sexo.valueOf(clienteDTO.idSexo()));
-
-        if(!clienteDTO.idTelefone().equals(entity.getTelefone().getId())){
-            entity.getTelefone().setId(clienteDTO.idTelefone());
+        
+        if(!clienteDTO.telefone().equals(entity.getTelefone().getId())){
+            entity.getTelefone().setId(clienteDTO.telefone());
         }
-        if(!clienteDTO.idEndereco().equals(entity.getEndereco().getId())){
-            entity.getEndereco().setId(clienteDTO.idEndereco());
+        if(!clienteDTO.endereco().equals(entity.getEndereco().getId())){
+            entity.getEndereco().setId(clienteDTO.endereco());
         }
-
-        clienteRepository.persist(entity);
 
         return new ClienteResponseDTO(entity);
     }

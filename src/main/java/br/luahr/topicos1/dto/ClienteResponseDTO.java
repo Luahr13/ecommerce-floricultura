@@ -11,11 +11,9 @@ public record ClienteResponseDTO(
     Long id,
     String nome,
     String cpf,
-    String email,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Sexo sexo,
-
     Telefone telefone,
     Endereco endereco
 ) {
@@ -24,7 +22,6 @@ public record ClienteResponseDTO(
             cliente.getId(),
             cliente.getNome(),
             cliente.getCpf(),
-            cliente.getEmail(),
             cliente.getSexo(),
             cliente.getTelefone(),
             cliente.getEndereco()

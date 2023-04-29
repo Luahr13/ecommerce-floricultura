@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Sexo {
-    MASCULINO(1, ""),
-    FEMININO(2, "");
+    MASCULINO(1, "Masculino"),
+    FEMININO(2, "Feminino");
 
     private int id;
     private String label;

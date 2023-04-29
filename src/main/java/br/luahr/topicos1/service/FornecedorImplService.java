@@ -64,7 +64,7 @@ public class FornecedorImplService implements FornecedorService{
     public FornecedorResponseDTO update(Long id, FornecedorDTO fornecedorDTO) throws ConstraintViolationException{
         validar(fornecedorDTO);
 
-        Fornecedor entity = new Fornecedor();
+        Fornecedor entity = fornecedorRepository.findById(id);
         entity.setNome(fornecedorDTO.nome());
         entity.setPaís(fornecedorDTO.país());
         entity.setSafra(fornecedorDTO.safra());

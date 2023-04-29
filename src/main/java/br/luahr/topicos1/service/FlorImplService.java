@@ -15,6 +15,7 @@ import javax.ws.rs.NotFoundException;
 import br.luahr.topicos1.dto.FlorDTO;
 import br.luahr.topicos1.dto.FlorResponseDTO;
 import br.luahr.topicos1.model.Flor;
+import br.luahr.topicos1.model.Fornecedor;
 import br.luahr.topicos1.model.TipoFlor;
 import br.luahr.topicos1.repository.FlorRepository;
 
@@ -57,7 +58,8 @@ public class FlorImplService implements FlorService{
         entity.setCorPetalas(florDTO.corPetalas());
         entity.setAlturaCaule(florDTO.alturaCaule());
         entity.setTipoFlor(TipoFlor.valueOf(florDTO.tipoFlor()));
-        entity.setFornecedor(entity.getFornecedor());
+        entity.setFornecedor(new Fornecedor());
+        entity.getFornecedor().setId(florDTO.fornecedor());
 
         florRepository.persist(entity);
 
@@ -70,14 +72,15 @@ public class FlorImplService implements FlorService{
     public FlorResponseDTO update(Long id, FlorDTO florDTO) {
         validar(florDTO);
         
-        Flor entity = new Flor();
+        Flor entity = florRepository.findById(id);
         entity.setNome(florDTO.nome());
         entity.setDescricao(florDTO.descricao());
         entity.setValorUnidade(florDTO.valorUnidade());
         entity.setCorPetalas(florDTO.corPetalas());
         entity.setAlturaCaule(florDTO.alturaCaule());
         entity.setTipoFlor(TipoFlor.valueOf(florDTO.tipoFlor()));
-        entity.setFornecedor(entity.getFornecedor());
+        entity.setFornecedor(new Fornecedor());
+        entity.getFornecedor().setId(florDTO.fornecedor());
 
         return new FlorResponseDTO(entity);
 
