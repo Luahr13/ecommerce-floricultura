@@ -34,6 +34,7 @@ public class MunicipioResourceTeste {
 
     @Test
     public void testInsert() {
+
         MunicipioDTO municipioDTO = new MunicipioDTO(
                 "Palmas",
                 1L);
