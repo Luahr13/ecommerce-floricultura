@@ -3,10 +3,8 @@ package br.luahr.topicos1.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
 public class Endereco extends DefaultEntity{
     private String bairro;
     private String numero;

@@ -7,12 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
 public class Municipio extends DefaultEntity{
     
     @Column(nullable = false)

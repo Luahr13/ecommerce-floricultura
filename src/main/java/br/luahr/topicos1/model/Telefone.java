@@ -3,10 +3,8 @@ package br.luahr.topicos1.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
 public class Telefone extends DefaultEntity{
     private String codigoArea;
     private String numero;

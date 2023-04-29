@@ -7,10 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
 public class Cliente extends DefaultEntity{
     private String nome;
 
@@ -20,12 +18,12 @@ public class Cliente extends DefaultEntity{
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_telefone", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_telefone")
     private Telefone telefone;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_endereco", nullable = false)
+    @OneToOne()
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
     public Telefone getTelefone() {
