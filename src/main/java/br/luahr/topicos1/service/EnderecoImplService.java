@@ -94,20 +94,6 @@ public class EnderecoImplService implements EnderecoService{
     }
 
     @Override
-    @Transactional
-    public void delete(Long id) throws IllegalArgumentException, NotFoundException{
-        if (id == null)
-            throw new IllegalArgumentException("Número inválido");
-
-        Endereco endereco = enderecoRepository.findById(id);
-
-        if (enderecoRepository.isPersistent(endereco)){
-            enderecoRepository.delete(endereco);
-        }else
-            throw new NotFoundException("Nenhum usuario encontrado");
-    }
-
-    @Override
     public List<EnderecoResponseDTO> findByNome(String nome) throws NullPointerException{
         List<Endereco> list = enderecoRepository.findByNome(nome);
 
@@ -122,5 +108,19 @@ public class EnderecoImplService implements EnderecoService{
     @Override
     public long count() {
         return enderecoRepository.count();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) throws IllegalArgumentException, NotFoundException {
+        if (id == null)
+            throw new IllegalArgumentException("Número inválido");
+
+        Endereco endereco = enderecoRepository.findById(id);
+
+        if (enderecoRepository.isPersistent(endereco)) {
+            enderecoRepository.delete(endereco);
+        } else
+            throw new NotFoundException("Nenhum usuario encontrado");
     }
 }
