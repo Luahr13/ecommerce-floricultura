@@ -6,9 +6,11 @@ import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
-import br.luahr.topicos1.dto.EstadoDTO;
-import br.luahr.topicos1.dto.EstadoResponseDTO;
-import br.luahr.topicos1.service.EstadoService;
+import br.luahr.topicos1.dto.MunicipioDTO;
+import br.luahr.topicos1.dto.MunicipioResponseDTO;
+import br.luahr.topicos1.service.MunicipioService;
+import io.quarkus.test.junit.QuarkusTest;
+
 import io.restassured.http.ContentType;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,78 +18,78 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import io.quarkus.test.junit.QuarkusTest;
-
 @QuarkusTest
-public class EstadoResourceTeste {
+public class MunicipioResourceTeste {
+
     @Inject
-    EstadoService estadoService;
+    MunicipioService municipioService;
 
     @Test
     public void testGetAll() {
         given()
-                .when().get("/estados")
+                .when().get("/municipios")
                 .then()
                 .statusCode(200);
     }
 
     @Test
     public void testInsert() {
-        EstadoDTO estadoDTO = new EstadoDTO(
-                "São Paulo",
-                "SP");
+        MunicipioDTO municipioDTO = new MunicipioDTO(
+                "Palmas",
+                1L);
         given()
                 .contentType(ContentType.JSON)
-                .body(estadoDTO)
-                .when().post("/estados")
+                .body(municipioDTO)
+                .when().post("/municipios")
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue(),
-                        "nome", is("São Paulo"),
-                                                     "sigla", is("SP"));
+                        "nome", is("Palmas"),
+                                                    "id_estado", is(1L));
     }
 
     @Test
     public void testUpdate() {
         // Adicionando uma pessoa no banco de dados
-        EstadoDTO estadoDTO = new EstadoDTO(
-                "São Paulo",
-                "SP");
-        Long id = estadoService.create(estadoDTO).id();
+        MunicipioDTO municipioDTO = new MunicipioDTO(
+                "Colinas",
+                1L);
+        Long id = municipioService.create(municipioDTO).id();
         // Criando outra pessoa para atuailzacao
-        EstadoDTO estadoUpDto = new EstadoDTO(
-                "Tocantins",
-                "TO");
+        MunicipioDTO municipioUpDTO = new MunicipioDTO(
+                "Palmas",
+                1L);
         given()
                 .contentType(ContentType.JSON)
-                .body(estadoUpDto)
+                .body(municipioUpDTO)
                 .when().put("/estados/" + id)
                 .then()
                 .statusCode(204);
         // Verificando se os dados foram atualizados no banco de dados
-        EstadoResponseDTO estadoResponseDTO = estadoService.findById(id);
-        assertThat(estadoResponseDTO.nome(), is("Tocantins"));
-        assertThat(estadoResponseDTO.sigla(), is("TO"));
+        MunicipioResponseDTO municipioResponseDTO = municipioService.findById(id);
+        assertThat(municipioResponseDTO.nome(), is("Tocantins"));
+        assertThat(municipioResponseDTO.estado().getId(), is(1L));
     }
 
     @Test
     public void testDelete() {
         // Adicionando uma pessoa no banco de dados
-        EstadoDTO estadoDTO = new EstadoDTO(
-                "São Paulo",
-                "SP");
-        Long id = estadoService.create(estadoDTO).id();
+        MunicipioDTO municipioDTO = new MunicipioDTO(
+                "Palmas",
+                1L);
+        Long id = municipioService.create(municipioDTO).id();
         given()
                 .when().delete("/estados/" + id)
                 .then()
                 .statusCode(204);
         // verificando se a pessoa fisica foi excluida
-        EstadoResponseDTO estadoResponseDTO = null;
+        MunicipioResponseDTO municipioResponseDTO = null;
         try {
-            estadoService.findById(id);
+            municipioService.findById(id);
         } catch (Exception e) {
         } finally {
-            assertNull(estadoResponseDTO);
+            assertNull(municipioResponseDTO);
         }
     }
+    
 }
