@@ -21,10 +21,10 @@ public class TelefoneResourceTeste {
     TelefoneService telefoneService;
 
     @Test
-    public void testGetAllTelefones() {
+    public void testeGetAll() {
         List<TelefoneResponseDTO> expectedTelefones = Arrays.asList(
-                new TelefoneResponseDTO((long) 10, "63", "(63) 11111-1111"),
-                new TelefoneResponseDTO((long)10, "11", "(11) 22222-2222")
+                new TelefoneResponseDTO(1L , "63", "(63) 11111-1111"),
+                new TelefoneResponseDTO(1L, "11", "(11) 22222-2222")
         );
 
         List<TelefoneResponseDTO> actualTelefones = given()
