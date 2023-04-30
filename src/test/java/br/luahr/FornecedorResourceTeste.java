@@ -90,7 +90,7 @@ public class FornecedorResourceTeste {
                 10F);
         Long idLong = fornecedorService.create(fornecedorDTO).id();
         given()
-                .when().delete("/estados/" + idLong)
+                .when().delete("/fornecedores/" + idLong)
                 .then()
                 .statusCode(204);
         // verificando se a pessoa fisica foi excluida

@@ -1,6 +1,7 @@
 package br.luahr.topicos1.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public record FornecedorDTO(
     @NotBlank(message = "O campo precisa ser preenchido.")
@@ -9,7 +10,7 @@ public record FornecedorDTO(
     String país,
     @NotBlank(message = "O campo precisa ser preenchido.")
     String safra,
-    @NotBlank(message = "O campo precisa ser preenchido.")
+    @NotNull(message = "O campo precisa ser preenchido.")
     Float volume
 ) {
 

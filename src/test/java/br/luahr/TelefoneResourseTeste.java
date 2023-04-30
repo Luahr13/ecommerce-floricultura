@@ -35,7 +35,7 @@ public class TelefoneResourseTeste {
     public void testInsert() {
         TelefoneDTO telefoneDTO = new TelefoneDTO(
                 "(63)",
-                "(63) 2693-6293");
+                "(99) 99999-9999");
         given()
                 .contentType(ContentType.JSON)
                 .body(telefoneDTO)
@@ -44,7 +44,7 @@ public class TelefoneResourseTeste {
                 .statusCode(201)
                 .body("id", notNullValue(),
                 "codigoArea", is("(63)"),
-                                             "numero", is("(63) 2693-6293"));
+                                             "numero", is("(99) 99999-9999"));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TelefoneResourseTeste {
         given()
                 .contentType(ContentType.JSON)
                 .body(telefoneUpDto)
-                .when().put("/estados/" + idTLong)
+                .when().put("/telefones/" + idTLong)
                 .then()
                 .statusCode(204);
         // Verificando se os dados foram atualizados no banco de dados
@@ -78,7 +78,7 @@ public class TelefoneResourseTeste {
                 "(63) 11111-1111");
         Long idLong = telefoneService.create(telefoneDTO).id();
         given()
-                .when().delete("/estados/" + idLong)
+                .when().delete("/telefones/" + idLong)
                 .then()
                 .statusCode(204);
         // verificando se a pessoa fisica foi excluida

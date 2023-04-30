@@ -60,7 +60,7 @@ public class FornecedorResource {
     public Response update(@PathParam("id") Long id, FornecedorDTO fornecedorDTO) {
         try {
             FornecedorResponseDTO fornecedor = fornecedorService.update(id, fornecedorDTO);
-            return Response.ok(fornecedor).build();
+            return Response.status(Status.NO_CONTENT).entity(fornecedor).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();
