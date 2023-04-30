@@ -35,7 +35,7 @@ public class TelefoneResourseTeste {
     public void testInsert() {
         TelefoneDTO telefoneDTO = new TelefoneDTO(
                 "(63)",
-                "(63) 11111-1111");
+                "(63) 2693-6293");
         given()
                 .contentType(ContentType.JSON)
                 .body(telefoneDTO)
@@ -43,8 +43,8 @@ public class TelefoneResourseTeste {
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue(),
-                        "codigoArea", is("(63)"),
-                                                     "numero", is("(63) 11111-1111"));
+                "codigoArea", is("(63)"),
+                                             "numero", is("(63) 2693-6293"));
     }
 
     @Test
