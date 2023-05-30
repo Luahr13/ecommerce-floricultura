@@ -1,7 +1,7 @@
 package br.luahr.topicos1.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record EstadoDTO(
     @NotBlank(message = "O campo precisa ser preenchido.")

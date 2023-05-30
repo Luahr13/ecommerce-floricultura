@@ -1,6 +1,6 @@
 package br.luahr.topicos1.model;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 @Entity
 public class Fornecedor extends DefaultEntity{

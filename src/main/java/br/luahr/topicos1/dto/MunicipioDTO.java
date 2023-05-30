@@ -1,7 +1,7 @@
 package br.luahr.topicos1.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record MunicipioDTO(
     @NotBlank(message = "O campo nome deve ser informado.")

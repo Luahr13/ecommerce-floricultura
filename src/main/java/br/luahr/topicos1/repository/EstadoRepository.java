@@ -2,7 +2,7 @@ package br.luahr.topicos1.repository;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import br.luahr.topicos1.model.Estado;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;

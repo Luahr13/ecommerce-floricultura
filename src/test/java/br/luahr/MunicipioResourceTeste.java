@@ -2,8 +2,8 @@ package br.luahr;
 
 import static io.restassured.RestAssured.given;
 
-import javax.inject.Inject;
-import javax.ws.rs.NotFoundException;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,9 @@ public class MunicipioResourceTeste {
 
         @Test
         public void testeCreatMunicipio() {
-                MunicipioDTO municipioDTO = new MunicipioDTO("Palmas", 1L);
+                MunicipioDTO municipioDTO = new MunicipioDTO(
+                        "Palmas",
+                        1L);
 
                 given()
                                 .contentType(ContentType.JSON)

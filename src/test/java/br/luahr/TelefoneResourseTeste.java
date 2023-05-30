@@ -2,7 +2,7 @@ package br.luahr;
 
 import static io.restassured.RestAssured.given;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 

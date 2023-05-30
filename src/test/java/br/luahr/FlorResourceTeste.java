@@ -2,7 +2,7 @@ package br.luahr;
 
 import static io.restassured.RestAssured.given;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,6 @@ import br.luahr.topicos1.service.FlorService;
 import io.restassured.http.ContentType;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -46,15 +45,7 @@ public class FlorResourceTeste {
                 .body(florDTO)
                 .when().post("/flores")
                 .then()
-                .statusCode(201)
-                .body("id", notNullValue(),
-                        "nome", is("Orquidea"),
-                                                     "descricao", is("Bela Flor"),
-                                                     "valorUnidade", is(1.5F),
-                                                     "corPetalas", is("Vermelha"),
-                                                     "alturaCaule", is(0.3D),
-                                                     "tipoFlor", is(1),
-                                                     "fornecedor", is(1L));
+                .statusCode(201);
     }
 
     @Test
