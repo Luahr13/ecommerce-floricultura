@@ -35,7 +35,7 @@ public class FlorResourceTeste {
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
-                1.5F,
+                1.5,
                 "Vermelha",
                 0.3D,
                 1,
@@ -54,7 +54,7 @@ public class FlorResourceTeste {
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
-                1.5F,
+                1.5,
                 "Vermelha",
                 0.3D,
                 1,
@@ -64,7 +64,7 @@ public class FlorResourceTeste {
         FlorDTO florUpDto = new FlorDTO(
                 "Rosa",
                 "Bela Flor",
-                1.5F,
+                1.5,
                 "Vermelha",
                 0.3D,
                 2,
@@ -92,7 +92,7 @@ public class FlorResourceTeste {
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
-                1.5F,
+                1.5,
                 "Vermelha",
                 0.3D,
                 1,

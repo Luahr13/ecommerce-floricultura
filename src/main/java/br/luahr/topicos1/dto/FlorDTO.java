@@ -9,7 +9,7 @@ public record FlorDTO(
     @NotBlank(message = "O campo precisa ser preenchido.")
     String descricao,
     @NotNull(message = "O campo precisa ser preenchido.")
-    Float valorUnidade,
+    Double valorUnidade,
     @NotBlank(message = "O campo precisa ser preenchido.")
     String corPetalas,
     @NotNull(message = "O campo precisa ser preenchido.")

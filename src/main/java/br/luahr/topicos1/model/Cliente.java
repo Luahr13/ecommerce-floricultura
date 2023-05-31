@@ -12,6 +12,10 @@ import jakarta.persistence.OneToOne;
 public class Cliente extends DefaultEntity{
     private String nome;
 
+    private String login;
+
+    private String senha;
+
     @Column(length = 14)
     private String cpf;
 
@@ -64,6 +68,22 @@ public class Cliente extends DefaultEntity{
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
 }

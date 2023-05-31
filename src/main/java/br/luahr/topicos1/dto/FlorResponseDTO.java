@@ -8,7 +8,7 @@ public record FlorResponseDTO(
     Long id,
     String nome,
     String descricao,
-    Float valorUnidade,
+    Double valorUnidade,
     String corPetalas,
     Double alturaCaule,
     TipoFlor tipoFlor,
