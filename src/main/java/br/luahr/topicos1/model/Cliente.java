@@ -1,7 +1,11 @@
 package br.luahr.topicos1.model;
 
+import java.util.Set;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,6 +19,21 @@ public class Cliente extends DefaultEntity{
     private String login;
 
     private String senha;
+
+    private String nomeImagem;
+
+    @ElementCollection
+    @CollectionTable(name = "perfis", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id"))
+    @Column(name = "perfil", length = 30)
+    private Set<Perfil> perfis;
+
+    public Set<Perfil> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(Set<Perfil> perfis) {
+        this.perfis = perfis;
+    }
 
     @Column(length = 14)
     private String cpf;
@@ -84,6 +103,14 @@ public class Cliente extends DefaultEntity{
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
     }
     
 }

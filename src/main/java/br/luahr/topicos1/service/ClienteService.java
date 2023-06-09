@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.luahr.topicos1.dto.ClienteDTO;
 import br.luahr.topicos1.dto.ClienteResponseDTO;
+import br.luahr.topicos1.model.Cliente;
 
 public interface ClienteService {
     // recursos basicos
@@ -14,6 +15,8 @@ public interface ClienteService {
     ClienteResponseDTO create(ClienteDTO productDTO);
 
     ClienteResponseDTO update(Long id, ClienteDTO productDTO);
+
+    Cliente findByLoginAndSenha(String login, String senha);
 
     void delete(Long id);
 
