@@ -2,6 +2,7 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -36,12 +37,14 @@ public class EnderecoResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "User"})
     public EnderecoResponseDTO findById(@PathParam("id") Long id) {
         return enderecoService.findById(id);
     }
 
     @POST
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response insert(EnderecoDTO enderecoDTO) {
         try {
             EnderecoResponseDTO endereco = enderecoService.create(enderecoDTO);
@@ -57,6 +60,7 @@ public class EnderecoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, EnderecoDTO enderecoDTO) {
         try {
             EnderecoResponseDTO endereco = enderecoService.update(id, enderecoDTO);
@@ -69,6 +73,7 @@ public class EnderecoResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         enderecoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
@@ -76,12 +81,14 @@ public class EnderecoResource {
 
     @GET
     @Path("/count")
+    @RolesAllowed({"Admin", "User"})
     public long count(){
         return enderecoService.count();
     }
 
     @GET
     @Path("/search/{nome}")
+    @RolesAllowed({"Admin", "User"})
     public List<EnderecoResponseDTO> search(@PathParam("nome") String nome){
         return enderecoService.findByNome(nome);
     }

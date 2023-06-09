@@ -2,6 +2,7 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -36,12 +37,14 @@ public class EstadoResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "User"})
     public EstadoResponseDTO findById(@PathParam("id") Long id) {
         return estadoService.findById(id);
     }
 
     @POST
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response insert(EstadoDTO estadoDTO) {
         try {
             EstadoResponseDTO estado = estadoService.create(estadoDTO);
@@ -57,6 +60,7 @@ public class EstadoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, EstadoDTO estadoDTO) {
         try {
             estadoService.update(id, estadoDTO);
@@ -76,12 +80,14 @@ public class EstadoResource {
 
     @GET
     @Path("/count")
+    @RolesAllowed({"Admin", "User"})
     public long count(){
         return estadoService.count();
     }
 
     @GET
     @Path("/search/{nome}")
+    @RolesAllowed({"Admin", "User"})
     public List<EstadoResponseDTO> search(@PathParam("nome") String nome){
         return estadoService.findByNome(nome);
     }

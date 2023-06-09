@@ -1,6 +1,5 @@
 package br.luahr.topicos1.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +12,6 @@ import jakarta.persistence.OneToMany;
 public class Compra extends DefaultEntity{
 
     private Boolean ifConcluida;
-    
-    private LocalDate dataCompra;
 
     private Double totalCompra;
 
@@ -40,14 +37,6 @@ public class Compra extends DefaultEntity{
 
     public Compra() {
         
-    }
-
-    public LocalDate getDataCompra() {
-        return dataCompra;
-    }
-
-    public void setDataCompra(LocalDate dataDaCompra) {
-        this.dataCompra = dataDaCompra;
     }
 
     public Double getTotalCompra() {

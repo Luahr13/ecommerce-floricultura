@@ -13,16 +13,12 @@ public class ItemCompra extends Produto {
     @Column(nullable = false)
     private Integer quantidade;
 
-    @Column(nullable = false)
-    private Double precoUnitario;
-
     @ManyToOne
     @JoinColumn(name = "id_flor", nullable = false)
     private Flor flor;
 
     public ItemCompra (Flor flor, Integer quantidade) {
         this.flor = flor;
-        this.precoUnitario = flor.getValorUnidade();
         this.quantidade = quantidade;
     }
 
@@ -50,14 +46,6 @@ public class ItemCompra extends Produto {
     public void updateQuantidade(Integer quantidade) {
 
         this.quantidade += quantidade;
-    }
-
-    public Double getPrecoUnitario() {
-        return precoUnitario;
-    }
-
-    public void setPrecoUnitario(Double preco) {
-        this.precoUnitario = preco;
     }
 
     public Flor getFlor() {
