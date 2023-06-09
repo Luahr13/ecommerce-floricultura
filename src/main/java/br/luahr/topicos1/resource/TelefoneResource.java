@@ -2,6 +2,7 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -36,12 +37,14 @@ public class TelefoneResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "User"})
     public TelefoneResponseDTO findById(@PathParam("id") Long id) {
         return telefoneService.findById(id);
     }
 
     @POST
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response insert(TelefoneDTO telefoneDTO) {
         try {
             TelefoneResponseDTO telefone = telefoneService.create(telefoneDTO);
@@ -57,6 +60,7 @@ public class TelefoneResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, TelefoneDTO telefoneDTO) {
         try {
             TelefoneResponseDTO telefone = telefoneService.update(id, telefoneDTO);
@@ -69,6 +73,7 @@ public class TelefoneResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         telefoneService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
@@ -76,12 +81,14 @@ public class TelefoneResource {
 
     @GET
     @Path("/count")
+    @RolesAllowed({"Admin", "User"})
     public long count(){
         return telefoneService.count();
     }
 
     @GET
     @Path("/search/{nome}")
+    @RolesAllowed({"Admin", "User"})
     public List<TelefoneResponseDTO> search(@PathParam("nome") String nome){
         return telefoneService.findByNome(nome);
     } 

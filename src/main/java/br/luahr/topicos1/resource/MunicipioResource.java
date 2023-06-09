@@ -2,6 +2,7 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -36,12 +37,14 @@ public class MunicipioResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "User"})
     public MunicipioResponseDTO findById(@PathParam("id") Long id) {
         return municipioService.findById(id);
     }
 
     @POST
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response insert(MunicipioDTO municipioDTO) {
         try {
             MunicipioResponseDTO municipio = municipioService.create(municipioDTO);
@@ -57,6 +60,7 @@ public class MunicipioResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, MunicipioDTO municipioDTO) {
         try {
             MunicipioResponseDTO municipio = municipioService.update(id, municipioDTO);
@@ -69,6 +73,7 @@ public class MunicipioResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         municipioService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
@@ -76,12 +81,14 @@ public class MunicipioResource {
 
     @GET
     @Path("/count")
+    @RolesAllowed({"Admin", "User"})
     public long count(){
         return municipioService.count();
     }
 
     @GET
     @Path("/search/{nome}")
+    @RolesAllowed({"Admin", "User"})
     public List<MunicipioResponseDTO> search(@PathParam("nome") String nome){
         return municipioService.findByNome(nome);
     }

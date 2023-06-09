@@ -2,6 +2,7 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -36,12 +37,14 @@ public class FlorResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Admin", "User"})
     public FlorResponseDTO findById(@PathParam("id") Long id) {
         return florService.findById(id);
     }
 
     @POST
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response insert(FlorDTO florDTO) {
         try {
             FlorResponseDTO flor = florService.create(florDTO);
@@ -57,6 +60,7 @@ public class FlorResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
+    @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, FlorDTO florDTO) {
         try {
             FlorResponseDTO flor = florService.update(id, florDTO);
@@ -69,6 +73,7 @@ public class FlorResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         florService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
@@ -76,12 +81,14 @@ public class FlorResource {
 
     @GET
     @Path("/count")
+    @RolesAllowed({"Admin", "User"})
     public long count(){
         return florService.count();
     }
 
     @GET
     @Path("/search/{nome}")
+    @RolesAllowed({"Admin", "User"})
     public List<FlorResponseDTO> search(@PathParam("nome") String nome){
         return florService.findByNome(nome);
     }
