@@ -74,6 +74,7 @@ public class EstadoResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         estadoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

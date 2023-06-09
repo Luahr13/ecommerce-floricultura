@@ -7,6 +7,7 @@ import jakarta.ws.rs.NotFoundException;
 
 import org.junit.jupiter.api.Test;
 
+import br.luahr.topicos1.dto.AuthClienteDTO;
 import br.luahr.topicos1.dto.EstadoDTO;
 import br.luahr.topicos1.dto.MunicipioDTO;
 import br.luahr.topicos1.dto.MunicipioResponseDTO;
@@ -15,13 +16,33 @@ import br.luahr.topicos1.service.MunicipioService;
 import io.quarkus.test.junit.QuarkusTest;
 
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
+
 @QuarkusTest
 public class MunicipioResourceTeste {
+
+        private String token;
+
+        @BeforeEach
+        public void setUp() {
+                var auth = new AuthClienteDTO("janio", "123");
+
+                Response response = (Response) given()
+                                .contentType("application/json")
+                                .body(auth)
+                                .when().post("/auth")
+                                .then()
+                                .statusCode(200)
+                                .extract().response();
+
+                token = response.header("Authorization");
+        }
 
         @Inject
         MunicipioService municipioService;
@@ -32,6 +53,7 @@ public class MunicipioResourceTeste {
         @Test
         public void testGetAll() {
                 given()
+                                .header("Authorization", "Bearer " + token)
                                 .when().get("/municipios")
                                 .then()
                                 .statusCode(200);
@@ -40,10 +62,11 @@ public class MunicipioResourceTeste {
         @Test
         public void testeCreatMunicipio() {
                 MunicipioDTO municipioDTO = new MunicipioDTO(
-                        "Palmas",
-                        1L);
+                                "Palmas",
+                                1L);
 
                 given()
+                                .header("Authorization", "Bearer " + token)
                                 .contentType(ContentType.JSON)
                                 .body(municipioDTO)
                                 .when().post("/municipios")
@@ -71,6 +94,7 @@ public class MunicipioResourceTeste {
                                 idEstado);
 
                 given()
+                                .header("Authorization", "Bearer " + token)
                                 .contentType(ContentType.JSON)
                                 .body(municipioUpDTO)
                                 .when().put("/municipios/" + id)
@@ -92,6 +116,7 @@ public class MunicipioResourceTeste {
                 Long id = municipioService.create(municipioDTO).id();
                 // Deletando o município
                 given()
+                                .header("Authorization", "Bearer " + token)
                                 .when().delete("/municipios/" + id)
                                 .then()
                                 .statusCode(204);

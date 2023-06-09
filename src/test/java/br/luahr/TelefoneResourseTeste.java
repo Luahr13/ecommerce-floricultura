@@ -6,26 +6,49 @@ import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import br.luahr.topicos1.dto.AuthClienteDTO;
 import br.luahr.topicos1.dto.TelefoneDTO;
 import br.luahr.topicos1.dto.TelefoneResponseDTO;
 import br.luahr.topicos1.service.TelefoneService;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.BeforeEach;
+
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 public class TelefoneResourseTeste {
+
+    private String token;
+
+    @BeforeEach
+    public void setUp(){
+        var auth = new AuthClienteDTO("janio", "123");
+
+        Response response = (Response) given()
+                .contentType("application/json")
+                .body(auth)
+                .when().post("/auth")
+                .then()
+                .statusCode(200)
+                .extract().response();
+        
+        token = response.header("Authorization");
+    }
+
     @Inject
     TelefoneService telefoneService;
 
     @Test
     public void testGetAll() {
         given()
+                .header("Authorization", "Bearer " + token)
                 .when().get("/telefones")
                 .then()
                 .statusCode(200);
@@ -37,6 +60,7 @@ public class TelefoneResourseTeste {
                 "(63)",
                 "(99) 99999-9999");
         given()
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(telefoneDTO)
                 .when().post("/telefones")
@@ -59,6 +83,7 @@ public class TelefoneResourseTeste {
             "(62)",
             "(62) 11111-2222");
         given()
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(telefoneUpDto)
                 .when().put("/telefones/" + idTLong)
@@ -78,6 +103,7 @@ public class TelefoneResourseTeste {
                 "(63) 11111-1111");
         Long idLong = telefoneService.create(telefoneDTO).id();
         given()
+                .header("Authorization", "Bearer " + token)
                 .when().delete("/telefones/" + idLong)
                 .then()
                 .statusCode(204);

@@ -6,25 +6,55 @@ import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import br.luahr.topicos1.dto.AuthClienteDTO;
 import br.luahr.topicos1.dto.FlorDTO;
 import br.luahr.topicos1.dto.FlorResponseDTO;
+import br.luahr.topicos1.dto.FornecedorDTO;
+import br.luahr.topicos1.model.Fornecedor;
 import br.luahr.topicos1.service.FlorService;
+import br.luahr.topicos1.service.FornecedorService;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.BeforeEach;
 
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 public class FlorResourceTeste {
+
+        private String token;
+
+        @BeforeEach
+        public void setUp() {
+                var auth = new AuthClienteDTO("janio", "123");
+
+                Response response = (Response) given()
+                                .contentType("application/json")
+                                .body(auth)
+                                .when().post("/auth")
+                                .then()
+                                .statusCode(200)
+                                .extract().response();
+
+                token = response.header("Authorization");
+        }
+
     @Inject
     FlorService florService;
+
+    @Inject
+    FornecedorService fornecedorService;
 
     @Test
     public void testGetAll() {
         given()
+                .header("Authorization", "Bearer " + token)
                 .when().get("/flores")
                 .then()
                 .statusCode(200);
@@ -32,6 +62,7 @@ public class FlorResourceTeste {
 
     @Test
     public void testInsert() {
+        Long idF = fornecedorService.create(new FornecedorDTO("L&L", "BR", "2023", 10F)).id();
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
@@ -39,16 +70,24 @@ public class FlorResourceTeste {
                 "Vermelha",
                 0.3D,
                 1,
-                1L);
+                idF);
         given()
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(florDTO)
                 .when().post("/flores")
                 .then()
-                .statusCode(201);
+                .statusCode(201)
+                .body("id", notNullValue(),
+                        "nome", is("Orquidea"),
+                        "descricao", is("Bela Flor"),
+                        "valorUnidade", is(1.5),
+                        "corPetalas", is("Vermelha"),
+                        "alturaCaule", is(0.3D),
+                        "fornecedor", is(Fornecedor.class));
     }
 
-    @Test
+@Test
     public void testUpdate() {
         // Adicionando uma pessoa no banco de dados
         FlorDTO florDTO = new FlorDTO(
@@ -70,6 +109,7 @@ public class FlorResourceTeste {
                 2,
                 1L);
         given()
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(florUpDto)
                 .when().put("/flores/" + idLong)
@@ -99,6 +139,7 @@ public class FlorResourceTeste {
                 1L);
         Long idLong = florService.create(florDTO).id();
         given()
+                .header("Authorization", "Bearer " + token)
                 .when().delete("/flores/" + idLong)
                 .then()
                 .statusCode(204);

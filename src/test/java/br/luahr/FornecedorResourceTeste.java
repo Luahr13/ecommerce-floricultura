@@ -6,26 +6,49 @@ import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
+import br.luahr.topicos1.dto.AuthClienteDTO;
 import br.luahr.topicos1.dto.FornecedorDTO;
 import br.luahr.topicos1.dto.FornecedorResponseDTO;
 import br.luahr.topicos1.service.FornecedorService;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.BeforeEach;
+
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 public class FornecedorResourceTeste {
+
+        private String token;
+
+        @BeforeEach
+        public void setUp() {
+                var auth = new AuthClienteDTO("janio", "123");
+
+                Response response = (Response) given()
+                                .contentType("application/json")
+                                .body(auth)
+                                .when().post("/auth")
+                                .then()
+                                .statusCode(200)
+                                .extract().response();
+
+                token = response.header("Authorization");
+        }
+        
     @Inject
     FornecedorService fornecedorService;
 
     @Test
     public void testGetAll() {
         given()
+                .header("Authorization", "Bearer " + token)
                 .when().get("/fornecedores")
                 .then()
                 .statusCode(200);
@@ -39,6 +62,7 @@ public class FornecedorResourceTeste {
                 "2023",
                 10F);
         given()
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(fornecedorDTO)
                 .when().post("/fornecedores")
@@ -67,6 +91,7 @@ public class FornecedorResourceTeste {
                 "2024",
                 12F);
         given()
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(fornecedorUpDto)
                 .when().put("/fornecedores/" + idLong)
@@ -90,6 +115,7 @@ public class FornecedorResourceTeste {
                 10F);
         Long idLong = fornecedorService.create(fornecedorDTO).id();
         given()
+                .header("Authorization", "Bearer " + token)
                 .when().delete("/fornecedores/" + idLong)
                 .then()
                 .statusCode(204);

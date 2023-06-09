@@ -11,9 +11,9 @@ public interface FornecedorService {
 
     FornecedorResponseDTO findById(Long id);
 
-    FornecedorResponseDTO create(FornecedorDTO productDTO);
+    FornecedorResponseDTO create(FornecedorDTO fornecedorDTO);
 
-    FornecedorResponseDTO update(Long id, FornecedorDTO productDTO);
+    FornecedorResponseDTO update(Long id, FornecedorDTO fornecedorDTO);
 
     void delete(Long id);
 
