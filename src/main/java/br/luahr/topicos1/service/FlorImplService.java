@@ -59,7 +59,7 @@ public class FlorImplService implements FlorService{
         entity.setAlturaCaule(florDTO.alturaCaule());
         entity.setTipoFlor(TipoFlor.valueOf(florDTO.tipoFlor()));
         entity.setFornecedor(new Fornecedor());
-        entity.getFornecedor().setId(florDTO.fornecedor());
+        entity.getFornecedor().setId(florDTO.idFornecedor());
 
         florRepository.persist(entity);
 
@@ -80,7 +80,7 @@ public class FlorImplService implements FlorService{
         entity.setAlturaCaule(florDTO.alturaCaule());
         entity.setTipoFlor(TipoFlor.valueOf(florDTO.tipoFlor()));
         entity.setFornecedor(new Fornecedor());
-        entity.getFornecedor().setId(florDTO.fornecedor());
+        entity.getFornecedor().setId(florDTO.idFornecedor());
 
         return new FlorResponseDTO(entity);
 

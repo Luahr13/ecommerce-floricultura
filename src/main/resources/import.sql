@@ -31,4 +31,6 @@ insert into cliente (nome, cpf, sexo, id_telefone, id_endereco) values('Leandra'
 
 insert into perfis (id_usuario, perfil) values (1, 'Admin');
 
-insert into fornecedor (nome, país, safra, volume) values("L&L", "BR", "2023", 10);
+insert into fornecedor (nome, país, safra, volume) values("L&L", "BR", "2023", 10F);
+
+    
