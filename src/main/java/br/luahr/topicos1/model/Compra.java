@@ -11,12 +11,12 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Compra extends DefaultEntity{
+
+    private Boolean ifConcluida;
     
     private LocalDate dataCompra;
 
     private Double totalCompra;
-
-    private Boolean ifConcluida;
 
     @ManyToOne
     @JoinColumn(name = "id_endereco")

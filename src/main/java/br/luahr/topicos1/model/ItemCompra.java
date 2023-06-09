@@ -4,9 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-public class ItemCompra extends DefaultEntity {
+@PrimaryKeyJoinColumn(name = "id")
+public class ItemCompra extends Produto {
 
     @Column(nullable = false)
     private Integer quantidade;
@@ -15,12 +17,12 @@ public class ItemCompra extends DefaultEntity {
     private Double precoUnitario;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto", nullable = false)
-    private Produto produto;
+    @JoinColumn(name = "id_flor", nullable = false)
+    private Flor flor;
 
-    public ItemCompra (Produto produto, Integer quantidade) {
-        this.produto = produto;
-        this.precoUnitario = produto.getValorUnidade();
+    public ItemCompra (Flor flor, Integer quantidade) {
+        this.flor = flor;
+        this.precoUnitario = flor.getValorUnidade();
         this.quantidade = quantidade;
     }
 
@@ -28,9 +30,9 @@ public class ItemCompra extends DefaultEntity {
         
     }
 
-    public boolean contains(Produto produto) {
+    public boolean contains(Flor flor) {
 
-        if (this.produto.getId() == produto.getId())
+        if (this.flor.getId() == flor.getId())
             return true;
         
         else
@@ -58,12 +60,12 @@ public class ItemCompra extends DefaultEntity {
         this.precoUnitario = preco;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Flor getFlor() {
+        return flor;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setFlor(Flor flor) {
+        this.flor = flor;
     }
 
 }

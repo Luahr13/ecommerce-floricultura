@@ -13,7 +13,6 @@ public record ClienteDTO(
     @Pattern(regexp = "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message = "O CPF deve estar no formato 999.999.999-99")
     String cpf,
 
-    @NotNull(message = "O campo precisa ser preenchido.")
     Integer idSexo,
 
     @Valid

@@ -73,7 +73,7 @@ public class ClienteImplService implements ClienteService {
         entity.getTelefone().setId(clienteDTO.telefone());
 
         entity.setEndereco(new Endereco());
-        entity.getEndereco().setId(clienteDTO.telefone());
+        entity.getEndereco().setId(clienteDTO.endereco());
         
         clienteRepository.persist(entity);
 
