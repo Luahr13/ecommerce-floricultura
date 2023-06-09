@@ -140,4 +140,9 @@ public class ClienteImplService implements ClienteService {
     public long count() {
         return clienteRepository.count();
     }
+
+    @Override
+    public Cliente findByLoginAndSenha(String login, String senha) {
+        return clienteRepository.findByLoginAndSenha(login, senha);
+    }
 }
