@@ -31,6 +31,7 @@ public class FlorResource {
     FlorService florService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<FlorResponseDTO> getAll() {
          return florService.getAll();
     }

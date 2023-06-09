@@ -31,6 +31,7 @@ public class EstadoResource {
     EstadoService estadoService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<EstadoResponseDTO> getAll() {
          return estadoService.getAll();
     }

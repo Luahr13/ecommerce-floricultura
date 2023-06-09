@@ -31,6 +31,7 @@ public class MunicipioResource {
     MunicipioService municipioService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<MunicipioResponseDTO> getAll() {
          return municipioService.getAll();
     }

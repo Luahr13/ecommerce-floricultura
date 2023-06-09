@@ -31,6 +31,7 @@ public class EnderecoResource {
     EnderecoService enderecoService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<EnderecoResponseDTO> getAll() {
          return enderecoService.getAll();
     }

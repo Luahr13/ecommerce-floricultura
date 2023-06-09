@@ -31,6 +31,7 @@ public class TelefoneResource {
     TelefoneService telefoneService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<TelefoneResponseDTO> getAll() {
          return telefoneService.getAll();
     }

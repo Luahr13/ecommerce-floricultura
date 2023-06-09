@@ -31,6 +31,7 @@ public class FornecedorResource {
     FornecedorService fornecedorService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<FornecedorResponseDTO> getAll() {
          return fornecedorService.getAll();
     }

@@ -9,6 +9,9 @@ public record ClienteDTO(
     @NotBlank(message = "O campo precisa ser preenchido.")
     String nome,
 
+    @NotNull(message="O perfil precisa ser informado")
+    Integer idPerfil,
+
     @NotBlank(message = "O campo precisa ser preenchido.")
     @Pattern(regexp = "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message = "O CPF deve estar no formato 999.999.999-99")
     String cpf,

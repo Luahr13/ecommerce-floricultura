@@ -32,6 +32,7 @@ public class ClienteResource {
     ClienteService clienteService;
 
     @GET
+    @RolesAllowed({"Admin", "User"})
     public List<ClienteResponseDTO> getAll() {
          return clienteService.getAll();
     }
