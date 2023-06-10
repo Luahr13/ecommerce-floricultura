@@ -7,7 +7,7 @@ public record FornecedorDTO(
     @NotBlank(message = "O campo precisa ser preenchido.")
     String nome,
     @NotBlank(message = "O campo precisa ser preenchido.")
-    String país,
+    String pais,
     @NotBlank(message = "O campo precisa ser preenchido.")
     String safra,
     @NotNull(message = "O campo precisa ser preenchido.")

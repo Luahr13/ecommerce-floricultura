@@ -2,8 +2,6 @@ package br.luahr.topicos1.resource;
 
 import java.io.IOException;
 
-import org.jboss.logging.Logger;
-
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
@@ -34,8 +32,6 @@ public class ClienteLogadoResource {
 
     @Inject
     FileService fileService;
-
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
 
     @GET
     @RolesAllowed({ "Admin", "User" })

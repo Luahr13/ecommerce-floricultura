@@ -50,7 +50,7 @@ public class FornecedorImplService implements FornecedorService{
 
         Fornecedor entity = new Fornecedor();
         entity.setNome(fornecedorDTO.nome());
-        entity.setPaís(fornecedorDTO.país());
+        entity.setPais(fornecedorDTO.pais());
         entity.setSafra(fornecedorDTO.safra());
         entity.setVolume(fornecedorDTO.volume());
 
@@ -66,7 +66,7 @@ public class FornecedorImplService implements FornecedorService{
 
         Fornecedor entity = fornecedorRepository.findById(id);
         entity.setNome(fornecedorDTO.nome());
-        entity.setPaís(fornecedorDTO.país());
+        entity.setPais(fornecedorDTO.pais());
         entity.setSafra(fornecedorDTO.safra());
         entity.setVolume(fornecedorDTO.volume());
 

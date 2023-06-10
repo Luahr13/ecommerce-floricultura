@@ -1,6 +1,5 @@
 package br.luahr.topicos1.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -10,30 +9,29 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(name = "id")
 public class ItemCompra extends Produto {
 
-    @Column(nullable = false)
     private Integer quantidade;
 
-    @ManyToOne
-    @JoinColumn(name = "id_flor", nullable = false)
-    private Flor flor;
+    // @ManyToOne
+    // @JoinColumn(name = "id_flor", nullable = false)
+    // private Flor flor;
 
-    public ItemCompra (Flor flor, Integer quantidade) {
-        this.flor = flor;
-        this.quantidade = quantidade;
-    }
+    // public ItemCompra (Flor flor, Integer quantidade) {
+    //     this.flor = flor;
+    //     this.quantidade = quantidade;
+    // }
 
     public ItemCompra() {
         
     }
 
-    public boolean contains(Flor flor) {
+    // public boolean contains(Flor flor) {
 
-        if (this.flor.getId() == flor.getId())
-            return true;
+    //     if (this.flor.getId() == flor.getId())
+    //         return true;
         
-        else
-            return false;
-    }
+    //     else
+    //         return false;
+    // }
 
     public Integer getQuantidade() {
         return quantidade;
@@ -48,12 +46,12 @@ public class ItemCompra extends Produto {
         this.quantidade += quantidade;
     }
 
-    public Flor getFlor() {
-        return flor;
-    }
+    // public Flor getFlor() {
+    //     return flor;
+    // }
 
-    public void setFlor(Flor flor) {
-        this.flor = flor;
-    }
+    // public void setFlor(Flor flor) {
+    //     this.flor = flor;
+    // }
 
 }

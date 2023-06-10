@@ -100,7 +100,7 @@ public class FornecedorResourceTeste {
         // Verificando se os dados foram atualizados no banco de dados
         FornecedorResponseDTO fornecedorResponseDTO = fornecedorService.findById(idLong);
         assertThat(fornecedorResponseDTO.nome(), is("L&L"));
-        assertThat(fornecedorResponseDTO.país(), is("BR"));
+        assertThat(fornecedorResponseDTO.pais(), is("BR"));
         assertThat(fornecedorResponseDTO.safra(), is("2024"));
         assertThat(fornecedorResponseDTO.volume(), is(12F));
     }

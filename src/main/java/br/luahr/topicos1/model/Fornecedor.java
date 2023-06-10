@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Fornecedor extends DefaultEntity{
     private String nome;
-    private String país;
+    private String pais;
     private String safra;
     private Float volume;
 
@@ -17,12 +17,12 @@ public class Fornecedor extends DefaultEntity{
         this.nome = produtor;
     }
 
-    public String getPaís() {
-        return país;
+    public String getPais() {
+        return pais;
     }
 
-    public void setPaís(String país) {
-        this.país = país;
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public String getSafra() {

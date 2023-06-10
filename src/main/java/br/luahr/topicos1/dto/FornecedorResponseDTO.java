@@ -5,7 +5,7 @@ import br.luahr.topicos1.model.Fornecedor;
 public record FornecedorResponseDTO(
     Long id,
     String nome,
-    String país,
+    String pais,
     String safra,
     Float volume
 ) {
@@ -13,7 +13,7 @@ public record FornecedorResponseDTO(
         this(
             fornecedor.getId(),
             fornecedor.getNome(),
-            fornecedor.getPaís(),
+            fornecedor.getPais(),
             fornecedor.getSafra(),
             fornecedor.getVolume());
         }
