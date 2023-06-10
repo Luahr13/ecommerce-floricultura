@@ -21,23 +21,15 @@ public record ClienteResponseDTO(
 
     String nomeImagem
 ) {
-    public static ClienteResponseDTO valueOf(Cliente cliente){
-        if(cliente.getPessoa() == null)
-            return new ClienteResponseDTO(cliente.getId(),
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    cliente.getLogin(),
-                                    null);
-            return new ClienteResponseDTO(cliente.getId(),
-                                        cliente.getPessoa().getNome(),
-                                        cliente.getPessoa().getCpf(),
-                                        cliente.getPessoa().getSexo(),
-                                        cliente.getPessoa().getTelefone(),
-                                        cliente.getPessoa().getEndereco(),
-                                        cliente.getLogin(),
-                                        cliente.getNomeImagem());
+    public ClienteResponseDTO (Cliente cliente){
+            this(cliente.getId(),
+                cliente.getNome(),
+                cliente.getCpf(),
+                cliente.getSexo(),
+                cliente.getTelefone(),
+                cliente.getEndereco(),
+                cliente.getLogin(),
+                cliente.getNomeImagem()
+                );
     }
 }

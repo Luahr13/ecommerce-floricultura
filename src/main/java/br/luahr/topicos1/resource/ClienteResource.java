@@ -2,6 +2,8 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -31,9 +33,13 @@ public class ClienteResource {
     @Inject
     ClienteService clienteService;
 
+    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+
     @GET
     @RolesAllowed({"Admin", "User"})
     public List<ClienteResponseDTO> getAll() {
+        LOG.info("Buscando todos os clientes.");
+        LOG.debug("ERRO DE DEBUG.");
          return clienteService.getAll();
     }
 
@@ -41,37 +47,41 @@ public class ClienteResource {
     @Path("/{id}")
     @RolesAllowed({"Admin", "User"})
     public ClienteResponseDTO findById(@PathParam("id") Long id) {
+        LOG.info("Buscando um cliente por ID.");
+        LOG.debug("ERRO DE DEBUG.");
         return clienteService.findById(id);
     }
 
-    // @POST
-    // @Transactional
-    // @RolesAllowed({"Admin"})
-    // public Response insert(ClienteDTO clienteDTO) {
-    //     try {
-    //         ClienteResponseDTO cliente = clienteService.create(clienteDTO);
-    //         return Response.status(Status.CREATED).entity(cliente).build();
-    //     } catch(ConstraintViolationException e) {
-    //         Result result = new Result(e.getConstraintViolations());
-    //         return Response.status(Status.NOT_FOUND).entity(result).build();
-    //     }
-    // }
+    @POST
+    @Transactional
+    @RolesAllowed({"Admin"})
+    public Response insert(ClienteDTO clienteDTO) {
+        LOG.info("Inserindo um cliente.");
+        try {
+            ClienteResponseDTO cliente = clienteService.create(clienteDTO);
+            return Response.status(Status.CREATED).entity(cliente).build();
+        } catch(ConstraintViolationException e) {
+            Result result = new Result(e.getConstraintViolations());
+            LOG.debug("ERRO DE DEBUG.");
+            return Response.status(Status.NOT_FOUND).entity(result).build();
+        }
+    }
 
-    // @PUT
-    // @Path("/{id}")
-    // @RolesAllowed({"Admin"})
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // @Produces(MediaType.APPLICATION_JSON)
-    // @Transactional
-    // public Response update(@PathParam("id") Long id, ClienteDTO clienteDTO) {
-    //     try {
-    //         ClienteResponseDTO cliente = clienteService.update(id, clienteDTO);
-    //         return Response.ok(cliente).build();
-    //     } catch(ConstraintViolationException e) {
-    //         Result result = new Result(e.getConstraintViolations());
-    //         return Response.status(Status.NOT_FOUND).entity(result).build();
-    //     }
-    // }
+    @PUT
+    @Path("/{id}")
+    @RolesAllowed({"Admin"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Response update(@PathParam("id") Long id, ClienteDTO clienteDTO) {
+        try {
+            ClienteResponseDTO cliente = clienteService.update(id, clienteDTO);
+            return Response.ok(cliente).build();
+        } catch(ConstraintViolationException e) {
+            Result result = new Result(e.getConstraintViolations());
+            return Response.status(Status.NOT_FOUND).entity(result).build();
+        }
+    }
 
     @DELETE
     @Path("/{id}")
