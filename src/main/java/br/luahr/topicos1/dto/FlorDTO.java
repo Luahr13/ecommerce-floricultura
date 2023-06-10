@@ -17,7 +17,7 @@ public record FlorDTO(
     @NotNull(message = "O campo precisa ser preenchido.")
     Integer  tipoFlor,
     @NotNull(message = "O campo precisa ser preenchido.")
-    Long idFornecedor
+    Long fornecedor
 ) {
     
 }

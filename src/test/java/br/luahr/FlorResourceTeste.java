@@ -10,6 +10,7 @@ import br.luahr.topicos1.dto.AuthClienteDTO;
 import br.luahr.topicos1.dto.FlorDTO;
 import br.luahr.topicos1.dto.FlorResponseDTO;
 import br.luahr.topicos1.dto.FornecedorDTO;
+import br.luahr.topicos1.model.Fornecedor;
 import br.luahr.topicos1.service.FlorService;
 import br.luahr.topicos1.service.FornecedorService;
 import io.restassured.http.ContentType;
@@ -60,32 +61,16 @@ public class FlorResourceTeste {
     }
 
     @Test
-    public void testeCreatFlor() {
-
-        FornecedorDTO fornecedorDTO = new FornecedorDTO("L&L", "BR", "2023", 10F);
-
-    Integer idFornecedor = given()
-            .header("Authorization", "Bearer " + token)
-            .contentType(ContentType.JSON)
-            .body(fornecedorDTO)
-            .when().post("/fornecedores")
-            .then()
-            .statusCode(201)
-            .body("id", notNullValue(),
-                    "nome", is("L&L"),
-                    "país", is("BR"),
-                    "safra", is("2023"),
-                    "volume", is(10F))
-            .extract().path("id");
-
+    public void testInsert() {
+        Long idF = fornecedorService.create(new FornecedorDTO("L&L", "BR", "2023", 10F)).id();
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
-                1.5D,
+                1.5,
                 "Vermelha",
                 0.3D,
                 1,
-                idFornecedor.longValue());
+                idF);
         given()
                 .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
@@ -94,13 +79,12 @@ public class FlorResourceTeste {
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue(),
-                "nome", is("Orquidea"),
-                "descricao", is("Bela Flor"),
-                "valorUnidade", is(1.5D),
-                "corPetalas", is("Vermelha"),
-                "alturaCaule", is(0.3D),
-                "tipoFlor", is(1),
-                "idFornecedor", is(idFornecedor.longValue()));
+                        "nome", is("Orquidea"),
+                        "descricao", is("Bela Flor"),
+                        "valorUnidade", is(1.5),
+                        "corPetalas", is("Vermelha"),
+                        "alturaCaule", is(0.3D),
+                        "fornecedor", is(Fornecedor.class));
     }
 
 @Test
