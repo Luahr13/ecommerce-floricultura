@@ -15,16 +15,29 @@ public record ClienteResponseDTO(
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Sexo sexo,
     Telefone telefone,
-    Endereco endereco
+    Endereco endereco,
+
+    String login,
+
+    String nomeImagem
 ) {
-    public ClienteResponseDTO(Cliente cliente){
-        this(
-            cliente.getId(),
-            cliente.getNome(),
-            cliente.getCpf(),
-            cliente.getSexo(),
-            cliente.getTelefone(),
-            cliente.getEndereco()
-        );
+    public static ClienteResponseDTO valueOf(Cliente cliente){
+        if(cliente.getPessoa() == null)
+            return new ClienteResponseDTO(cliente.getId(),
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    cliente.getLogin(),
+                                    null);
+            return new ClienteResponseDTO(cliente.getId(),
+                                        cliente.getPessoa().getNome(),
+                                        cliente.getPessoa().getCpf(),
+                                        cliente.getPessoa().getSexo(),
+                                        cliente.getPessoa().getTelefone(),
+                                        cliente.getPessoa().getEndereco(),
+                                        cliente.getLogin(),
+                                        cliente.getNomeImagem());
     }
 }

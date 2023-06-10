@@ -44,34 +44,34 @@ public class ClienteResource {
         return clienteService.findById(id);
     }
 
-    @POST
-    @Transactional
-    @RolesAllowed({"Admin"})
-    public Response insert(ClienteDTO clienteDTO) {
-        try {
-            ClienteResponseDTO cliente = clienteService.create(clienteDTO);
-            return Response.status(Status.CREATED).entity(cliente).build();
-        } catch(ConstraintViolationException e) {
-            Result result = new Result(e.getConstraintViolations());
-            return Response.status(Status.NOT_FOUND).entity(result).build();
-        }
-    }
+    // @POST
+    // @Transactional
+    // @RolesAllowed({"Admin"})
+    // public Response insert(ClienteDTO clienteDTO) {
+    //     try {
+    //         ClienteResponseDTO cliente = clienteService.create(clienteDTO);
+    //         return Response.status(Status.CREATED).entity(cliente).build();
+    //     } catch(ConstraintViolationException e) {
+    //         Result result = new Result(e.getConstraintViolations());
+    //         return Response.status(Status.NOT_FOUND).entity(result).build();
+    //     }
+    // }
 
-    @PUT
-    @Path("/{id}")
-    @RolesAllowed({"Admin"})
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response update(@PathParam("id") Long id, ClienteDTO clienteDTO) {
-        try {
-            ClienteResponseDTO cliente = clienteService.update(id, clienteDTO);
-            return Response.ok(cliente).build();
-        } catch(ConstraintViolationException e) {
-            Result result = new Result(e.getConstraintViolations());
-            return Response.status(Status.NOT_FOUND).entity(result).build();
-        }
-    }
+    // @PUT
+    // @Path("/{id}")
+    // @RolesAllowed({"Admin"})
+    // @Consumes(MediaType.APPLICATION_JSON)
+    // @Produces(MediaType.APPLICATION_JSON)
+    // @Transactional
+    // public Response update(@PathParam("id") Long id, ClienteDTO clienteDTO) {
+    //     try {
+    //         ClienteResponseDTO cliente = clienteService.update(id, clienteDTO);
+    //         return Response.ok(cliente).build();
+    //     } catch(ConstraintViolationException e) {
+    //         Result result = new Result(e.getConstraintViolations());
+    //         return Response.status(Status.NOT_FOUND).entity(result).build();
+    //     }
+    // }
 
     @DELETE
     @Path("/{id}")

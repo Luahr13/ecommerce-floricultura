@@ -79,64 +79,64 @@ public class ClienteResourceTeste {
                                                      "endereco", is(1L));
     }
 
-    @Test
-    public void testUpdate() {
-        // Adicionando uma pessoa no banco de dados
-        ClienteDTO clienteDTO = new ClienteDTO(
-                "Luahr",
-                1,
-                "11111111111-11",
-                1,
-                1L,
-                1L);
-        Long idLong = clienteService.create(clienteDTO).id();
-        // Criando outra pessoa para atuailzacao
-        ClienteDTO clienteUpDto = new ClienteDTO(
-                "Luahr",
-                1,
-                "11111111111-22",
-                1,
-                1L,
-                1L);
-        given()
-                .header("Authorization", "Bearer" + token)
-                .contentType(ContentType.JSON)
-                .body(clienteUpDto)
-                .when().put("/clientes/" + idLong)
-                .then()
-                .statusCode(204);
-        // Verificando se os dados foram atualizados no banco de dados
-        ClienteResponseDTO clienteResponseDTO = clienteService.findById(idLong);
-        assertThat(clienteResponseDTO.nome(), is("Luahr"));
-        assertThat(clienteResponseDTO.cpf(), is("11111111111-11"));
-        assertThat(clienteResponseDTO.sexo(), is(1));
-        assertThat(clienteResponseDTO.telefone(), is(1L));
-        assertThat(clienteResponseDTO.endereco(), is(1L));
-    }
+//     @Test
+//     public void testUpdate() {
+//         // Adicionando uma pessoa no banco de dados
+//         ClienteDTO clienteDTO = new ClienteDTO(
+//                 "Luahr",
+//                 1,
+//                 "11111111111-11",
+//                 1,
+//                 1L,
+//                 1L);
+//         Long idLong = clienteService.create(clienteDTO).id();
+//         // Criando outra pessoa para atuailzacao
+//         ClienteDTO clienteUpDto = new ClienteDTO(
+//                 "Luahr",
+//                 1,
+//                 "11111111111-22",
+//                 1,
+//                 1L,
+//                 1L);
+//         given()
+//                 .header("Authorization", "Bearer" + token)
+//                 .contentType(ContentType.JSON)
+//                 .body(clienteUpDto)
+//                 .when().put("/clientes/" + idLong)
+//                 .then()
+//                 .statusCode(204);
+//         // Verificando se os dados foram atualizados no banco de dados
+//         ClienteResponseDTO clienteResponseDTO = clienteService.findById(idLong);
+//         assertThat(clienteResponseDTO.nome(), is("Luahr"));
+//         assertThat(clienteResponseDTO.cpf(), is("11111111111-11"));
+//         assertThat(clienteResponseDTO.sexo(), is(1));
+//         assertThat(clienteResponseDTO.telefone(), is(1L));
+//         assertThat(clienteResponseDTO.endereco(), is(1L));
+//     }
 
-    @Test
-    public void testDelete() {
-        // Adicionando uma pessoa no banco de dados
-        ClienteDTO clienteDTO = new ClienteDTO(
-                        "Luahr",
-                        1,
-                        "11111111111-11",
-                        1,
-                        1L,
-                        1L);
-        Long idLong = clienteService.create(clienteDTO).id();
-        given()
-                .header("Authorization", "Bearer" + token)
-                .when().delete("/clientes/" + idLong)
-                .then()
-                .statusCode(204);
-        // verificando se a pessoa fisica foi excluida
-        ClienteResponseDTO clienteResponseDTO = null;
-        try {
-            clienteService.findById(idLong);
-        } catch (Exception e) {
-        } finally {
-            assertNull(clienteResponseDTO);
-        }
-    }
+//     @Test
+//     public void testDelete() {
+//         // Adicionando uma pessoa no banco de dados
+//         ClienteDTO clienteDTO = new ClienteDTO(
+//                         "Luahr",
+//                         1,
+//                         "11111111111-11",
+//                         1,
+//                         1L,
+//                         1L);
+//         Long idLong = clienteService.create(clienteDTO).id();
+//         given()
+//                 .header("Authorization", "Bearer" + token)
+//                 .when().delete("/clientes/" + idLong)
+//                 .then()
+//                 .statusCode(204);
+//         // verificando se a pessoa fisica foi excluida
+//         ClienteResponseDTO clienteResponseDTO = null;
+//         try {
+//             clienteService.findById(idLong);
+//         } catch (Exception e) {
+//         } finally {
+//             assertNull(clienteResponseDTO);
+//         }
+//     }
 }

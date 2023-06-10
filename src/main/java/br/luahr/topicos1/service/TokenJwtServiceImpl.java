@@ -19,7 +19,7 @@ public class TokenJwtServiceImpl implements TokenJwtService {
         Instant now = Instant.now();
         Instant expiryDate = now.plus(EXPIRATION_TIME);
 
-        Set<String> roles = cliente.getPerfis()
+        Set<String> roles = cliente.getPessoa().getPerfis()
                 .stream().map(p -> p.getLabel())
                 .collect(Collectors.toSet());
 

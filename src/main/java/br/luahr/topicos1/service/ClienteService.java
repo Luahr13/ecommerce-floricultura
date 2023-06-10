@@ -12,11 +12,15 @@ public interface ClienteService {
 
     ClienteResponseDTO findById(Long id);
 
-    ClienteResponseDTO create(ClienteDTO productDTO);
+    // ClienteResponseDTO create(ClienteDTO productDTO);
 
-    ClienteResponseDTO update(Long id, ClienteDTO productDTO);
+    // ClienteResponseDTO update(Long id, ClienteDTO productDTO);
 
     Cliente findByLoginAndSenha(String login, String senha);
+
+    ClienteResponseDTO update(Long id, String nomeImagem);
+
+    ClienteResponseDTO findByLogin(String login);
 
     void delete(Long id);
 
