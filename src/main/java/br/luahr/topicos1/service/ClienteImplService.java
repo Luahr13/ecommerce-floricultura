@@ -43,9 +43,9 @@ public class ClienteImplService implements ClienteService {
     @Override
     public List<ClienteResponseDTO> getAll() {
         return clienteRepository.findAll()
-                                        .stream()
-                                        .map(ClienteResponseDTO::new)
-                                        .collect(Collectors.toList());
+                .stream()
+                .map(ClienteResponseDTO::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ClienteImplService implements ClienteService {
         Cliente cliente = clienteRepository.findById(id);
         if (cliente == null)
             throw new NotFoundException("Não encontrado");
-            return new ClienteResponseDTO(cliente);
+        return new ClienteResponseDTO(cliente);
     }
 
     @Override
@@ -65,14 +65,16 @@ public class ClienteImplService implements ClienteService {
         entity.setNome(clienteDTO.nome());
         entity.setCpf(clienteDTO.cpf());
 
-        entity.setSexo(Sexo.valueOf(clienteDTO.idSexo())); //Seta sexo
+        Integer idSexo = clienteDTO.idSexo(); // Obtém o idSexo do DTO
+        Sexo sexo = idSexo != null ? Sexo.valueOf(idSexo) : null; // Converte para Sexo, considerando null quando idSexo for null
+        entity.setSexo(sexo); // Seta o sexo no cliente
 
-        entity.setTelefone(new Telefone());
-        entity.getTelefone().setId(clienteDTO.telefone());
+        Telefone telefone = telefoneRepository.findById(clienteDTO.idTelefone());
+        entity.setTelefone(telefone);
 
-        entity.setEndereco(new Endereco());
-        entity.getEndereco().setId(clienteDTO.endereco());
-        
+        Endereco endereco = enderecoRepository.findById(clienteDTO.idEndereco());
+        entity.setEndereco(endereco);
+
         clienteRepository.persist(entity);
 
         return new ClienteResponseDTO(entity);
@@ -87,13 +89,15 @@ public class ClienteImplService implements ClienteService {
         entity.setNome(clienteDTO.nome());
         entity.setCpf(clienteDTO.cpf());
 
-        entity.setSexo(Sexo.valueOf(clienteDTO.idSexo()));
-        
-        if(!clienteDTO.telefone().equals(entity.getTelefone().getId())){
-            entity.getTelefone().setId(clienteDTO.telefone());
+        Integer idSexo = clienteDTO.idSexo(); // Obtém o idSexo do DTO
+        Sexo sexo = idSexo != null ? Sexo.valueOf(idSexo) : null; // Converte para Sexo, considerando null quando idSexo for null
+        entity.setSexo(sexo); // Seta o sexo no cliente
+
+        if (!clienteDTO.idTelefone().equals(entity.getTelefone().getId())) {
+            entity.getTelefone().setId(clienteDTO.idTelefone());
         }
-        if(!clienteDTO.endereco().equals(entity.getEndereco().getId())){
-            entity.getEndereco().setId(clienteDTO.endereco());
+        if (!clienteDTO.idEndereco().equals(entity.getEndereco().getId())) {
+            entity.getEndereco().setId(clienteDTO.idEndereco());
         }
 
         return new ClienteResponseDTO(entity);
@@ -130,8 +134,8 @@ public class ClienteImplService implements ClienteService {
             throw new NullPointerException("nenhum usuario encontrado");
 
         return list.stream()
-                        .map(ClienteResponseDTO::new)
-                        .collect(Collectors.toList());
+                .map(ClienteResponseDTO::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -146,8 +150,8 @@ public class ClienteImplService implements ClienteService {
 
     @Override
     public ClienteResponseDTO findByLogin(String login) {
-        Cliente cliente =  clienteRepository.findByLogin(login);
-        if(cliente == null)
+        Cliente cliente = clienteRepository.findByLogin(login);
+        if (cliente == null)
             throw new NotFoundException("Cliente não encontrado");
         return new ClienteResponseDTO(cliente);
     }

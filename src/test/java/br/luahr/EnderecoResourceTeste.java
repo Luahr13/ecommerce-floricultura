@@ -3,6 +3,7 @@ package br.luahr;
 import static io.restassured.RestAssured.given;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ import io.restassured.response.Response;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -93,15 +94,17 @@ public class EnderecoResourceTeste {
 
         @Test
         public void testUpdate() {
-                // Adicionando uma pessoa no banco de dados
+                Long idEstado = estadoService.create(new EstadoDTO("Tocantins", "TO")).id();
+                Long idMunicipio = municipioService.create(new MunicipioDTO("Palmas", idEstado)).id();
+
                 EnderecoDTO enderecoDTO = new EnderecoDTO(
                                 "Norte",
                                 "13",
                                 "05",
                                 "11111-111",
-                                1L);
+                                idMunicipio);
                 Long idEdLong = enderecoService.create(enderecoDTO).id();
-                // Criando outra pessoa para atuailzacao
+
                 EnderecoDTO enderecoUpDto = new EnderecoDTO(
                                 "Centro",
                                 "13",
@@ -109,6 +112,7 @@ public class EnderecoResourceTeste {
                                 "11111-112",
                                 1L);
                 given()
+                                .header("Authorization", "Bearer " + token)
                                 .contentType(ContentType.JSON)
                                 .body(enderecoUpDto)
                                 .when().put("/enderecos/" + idEdLong)
@@ -119,32 +123,28 @@ public class EnderecoResourceTeste {
                 assertThat(estadoResponseDTO.bairro(), is("Centro"));
                 assertThat(estadoResponseDTO.numero(), is("13"));
                 assertThat(estadoResponseDTO.complemento(), is("05"));
-                assertThat(estadoResponseDTO.cep(), is("11111-111"));
-                assertThat(estadoResponseDTO.id(), is(1L));
-
+                assertThat(estadoResponseDTO.cep(), is("11111-112"));
+                assertThat(estadoResponseDTO.municipio(), notNullValue());
         }
 
         @Test
         public void testDelete() {
-                // Adicionando uma pessoa no banco de dados
+                Long idEstado = estadoService.create(new EstadoDTO("Tocantins", "TO")).id();
+                Long idMunicipio = municipioService.create(new MunicipioDTO("Palmas", idEstado)).id();
+
                 EnderecoDTO enderecoDTO = new EnderecoDTO(
                                 "Norte",
                                 "13",
                                 "05",
                                 "11111-111",
-                                1L);
+                                idMunicipio);
                 Long idELong = enderecoService.create(enderecoDTO).id();
                 given()
-                                .when().delete("/estados/" + idELong)
+                                .header("Authorization", "Bearer " + token)
+                                .when().delete("/enderecos/" + idELong)
                                 .then()
                                 .statusCode(204);
-                // verificando se a pessoa fisica foi excluida
-                EnderecoResponseDTO enderecoResponseDTO = null;
-                try {
-                        enderecoService.findById(idELong);
-                } catch (Exception e) {
-                } finally {
-                        assertNull(enderecoResponseDTO);
-                }
+
+                assertThrows(NotFoundException.class, () -> enderecoService.findById(idELong));
         }
 }

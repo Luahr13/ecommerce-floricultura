@@ -31,26 +31,26 @@ public class EstadoResource {
     EstadoService estadoService;
 
     @GET
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ "Admin", "User" })
     public List<EstadoResponseDTO> getAll() {
-         return estadoService.getAll();
+        return estadoService.getAll();
     }
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ "Admin", "User" })
     public EstadoResponseDTO findById(@PathParam("id") Long id) {
         return estadoService.findById(id);
     }
 
     @POST
     @Transactional
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ "Admin" })
     public Response insert(EstadoDTO estadoDTO) {
         try {
             EstadoResponseDTO estado = estadoService.create(estadoDTO);
             return Response.status(Status.CREATED).entity(estado).build();
-        } catch(ConstraintViolationException e) {
+        } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
@@ -61,12 +61,12 @@ public class EstadoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ "Admin" })
     public Response update(@PathParam("id") Long id, EstadoDTO estadoDTO) {
         try {
             estadoService.update(id, estadoDTO);
             return Response.status(Status.NO_CONTENT).build();
-        } catch(ConstraintViolationException e) {
+        } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
@@ -74,7 +74,7 @@ public class EstadoResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {
         estadoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
@@ -82,15 +82,15 @@ public class EstadoResource {
 
     @GET
     @Path("/count")
-    @RolesAllowed({"Admin", "User"})
-    public long count(){
+    @RolesAllowed({ "Admin", "User" })
+    public long count() {
         return estadoService.count();
     }
 
     @GET
     @Path("/search/{nome}")
-    @RolesAllowed({"Admin", "User"})
-    public List<EstadoResponseDTO> search(@PathParam("nome") String nome){
+    @RolesAllowed({ "Admin", "User" })
+    public List<EstadoResponseDTO> search(@PathParam("nome") String nome) {
         return estadoService.findByNome(nome);
     }
 }

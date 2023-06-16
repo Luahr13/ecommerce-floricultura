@@ -64,8 +64,8 @@ public class EnderecoResource {
     @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, EnderecoDTO enderecoDTO) {
         try {
-            EnderecoResponseDTO endereco = enderecoService.update(id, enderecoDTO);
-            return Response.ok(endereco).build();
+            enderecoService.update(id, enderecoDTO);
+            return Response.status(Status.NO_CONTENT).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();

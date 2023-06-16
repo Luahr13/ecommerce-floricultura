@@ -72,6 +72,7 @@ public class MunicipioImplService implements MunicipioService{
 
         var entity = municipioRepository.findById(id);
         entity.setNome(municipioDTO.nome());
+        
         if(!municipioDTO.idEstado().equals(entity.getEstado().getId()) ){
         entity.getEstado().setId(municipioDTO.idEstado());;
         }

@@ -3,9 +3,7 @@ package br.luahr.topicos1.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.luahr.topicos1.model.Cliente;
-import br.luahr.topicos1.model.Endereco;
 import br.luahr.topicos1.model.Sexo;
-import br.luahr.topicos1.model.Telefone;
 
 public record ClienteResponseDTO(
     Long id,
@@ -14,8 +12,8 @@ public record ClienteResponseDTO(
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Sexo sexo,
-    Telefone telefone,
-    Endereco endereco,
+    TelefoneResponseDTO telefone,
+    EnderecoResponseDTO endereco,
 
     String login,
 
@@ -26,8 +24,8 @@ public record ClienteResponseDTO(
                 cliente.getNome(),
                 cliente.getCpf(),
                 cliente.getSexo(),
-                cliente.getTelefone(),
-                cliente.getEndereco(),
+                new TelefoneResponseDTO(cliente.getTelefone()),
+                new EnderecoResponseDTO(cliente.getEndereco()),
                 cliente.getLogin(),
                 cliente.getNomeImagem()
                 );

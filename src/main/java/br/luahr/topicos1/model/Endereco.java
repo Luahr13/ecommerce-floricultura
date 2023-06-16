@@ -13,20 +13,8 @@ public class Endereco extends DefaultEntity{
     private String cep;
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "id_municipio")
+    @JoinColumn(name = "id_municipio", nullable = false)
     private Municipio municipio;
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 
     public Municipio getMunicipio() {
         return municipio;

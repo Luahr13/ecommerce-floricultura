@@ -17,11 +17,11 @@ public record ClienteDTO(
 
     @Valid
     @NotNull(message = "O telefone precisa ser informado.")
-    Long telefone,
+    Long idTelefone,
 
     @Valid
     @NotNull(message = "O endereço precisa ser informado.")
-    Long endereco
+    Long idEndereco
 ) {
     
 }

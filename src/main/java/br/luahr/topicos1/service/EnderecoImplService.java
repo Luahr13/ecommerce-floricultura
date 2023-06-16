@@ -57,8 +57,10 @@ public class EnderecoImplService implements EnderecoService{
         entity.setNumero(enderecoDTO.numero());
         entity.setComplemento(enderecoDTO.complemento());
         entity.setCep(enderecoDTO.cep());
-        entity.setMunicipio(new Municipio());
-        entity.getMunicipio().setId(enderecoDTO.idMunicipio());
+
+        Municipio municipio = municipioRepository.findById(enderecoDTO.idMunicipio());
+
+        entity.setMunicipio(municipio);
 
         enderecoRepository.persist(entity);
 
@@ -75,8 +77,9 @@ public class EnderecoImplService implements EnderecoService{
         entity.setNumero(enderecoDTO.numero());
         entity.setComplemento(enderecoDTO.complemento());
         entity.setCep(enderecoDTO.cep());
-        if(!enderecoDTO.idMunicipio().equals(entity.getMunicipio().getId())){
-            entity.getMunicipio().setId(enderecoDTO.idMunicipio());
+        Municipio municipio = municipioRepository.findById(enderecoDTO.idMunicipio());
+        if (!entity.getMunicipio().getId().equals(municipio.getId())) {
+            entity.setMunicipio(municipio);
         }
 
 

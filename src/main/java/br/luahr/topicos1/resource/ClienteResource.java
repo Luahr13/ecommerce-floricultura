@@ -76,7 +76,7 @@ public class ClienteResource {
     public Response update(@PathParam("id") Long id, ClienteDTO clienteDTO) {
         try {
             ClienteResponseDTO cliente = clienteService.update(id, clienteDTO);
-            return Response.ok(cliente).build();
+            return Response.status(Status.NO_CONTENT).entity(cliente).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();
