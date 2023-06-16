@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Flor extends Produto{
     private String corPetalas;
-    private Double alturaCaule;
+    private Float alturaCaule;
 
     @Enumerated(EnumType.STRING)
     private TipoFlor tipoFlor;
@@ -26,11 +26,11 @@ public class Flor extends Produto{
         this.corPetalas = corPetalas;
     }
 
-    public Double getAlturaCaule() {
+    public Float getAlturaCaule() {
         return alturaCaule;
     }
 
-    public void setAlturaCaule(Double alturaCaule) {
+    public void setAlturaCaule(Float alturaCaule) {
         this.alturaCaule = alturaCaule;
     }
 

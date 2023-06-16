@@ -63,7 +63,6 @@ public class EnderecoImplService implements EnderecoService{
         enderecoRepository.persist(entity);
 
         return new EnderecoResponseDTO(entity);
-
     }
 
     @Override

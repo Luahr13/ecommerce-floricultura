@@ -62,15 +62,17 @@ public class FlorResourceTeste {
 
     @Test
     public void testInsert() {
-        Long idF = fornecedorService.create(new FornecedorDTO("L&L", "BR", "2023", 10F)).id();
+
+        Long id = fornecedorService.create(new FornecedorDTO("L&L", "Brasil", "2023", 3F)).id();
+
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
                 1.5,
                 "Vermelha",
-                0.3D,
+                0.3F,
                 1,
-                idF);
+                id);
         given()
                 .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
@@ -81,49 +83,50 @@ public class FlorResourceTeste {
                 .body("id", notNullValue(),
                         "nome", is("Orquidea"),
                         "descricao", is("Bela Flor"),
-                        "valorUnidade", is(1.5),
+                        "valorUnidade", is(1.5F),
                         "corPetalas", is("Vermelha"),
-                        "alturaCaule", is(0.3D),
-                        "fornecedor", is(Fornecedor.class));
+                        "alturaCaule", is(0.3F),
+                        "fornecedor", notNullValue(Fornecedor.class));
     }
 
 @Test
     public void testUpdate() {
+        Long id = fornecedorService.create(new FornecedorDTO("L&L", "Brasil", "2023", 3F)).id();
         // Adicionando uma pessoa no banco de dados
         FlorDTO florDTO = new FlorDTO(
                 "Orquidea",
                 "Bela Flor",
-                1.5,
+                1.5D,
                 "Vermelha",
-                0.3D,
+                0.3F,
                 1,
-                1L);
+                id);
         Long idLong = florService.create(florDTO).id();
         // Criando outra pessoa para atuailzacao
         FlorDTO florUpDto = new FlorDTO(
                 "Rosa",
                 "Bela Flor",
-                1.5,
+                1.5D,
                 "Vermelha",
-                0.3D,
+                0.3F,
                 2,
-                1L);
+                id);
         given()
                 .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .body(florUpDto)
                 .when().put("/flores/" + idLong)
                 .then()
-                .statusCode(204);
+                .statusCode(200);
         // Verificando se os dados foram atualizados no banco de dados
         FlorResponseDTO florResponseDTO = florService.findById(idLong);
-        assertThat(florResponseDTO.nome(), is("Rosa"));
-        assertThat(florResponseDTO.descricao(), is("Bela For"));
-        assertThat(florResponseDTO.valorUnidade(), is(1.5F));
-        assertThat(florResponseDTO.corPetalas(), is("Vermelha"));
-        assertThat(florResponseDTO.alturaCaule(), is(0.3D));
-        assertThat(florResponseDTO.tipoFlor(), is(2));
-        assertThat(florResponseDTO.fornecedor(), is(1L));
+        assertThat(florResponseDTO.nome(), is(florUpDto.nome()));
+        assertThat(florResponseDTO.descricao(), is(florUpDto.descricao()));
+        assertThat(florResponseDTO.valorUnidade(), is(florUpDto.valorUnidade()));
+        assertThat(florResponseDTO.corPetalas(), is(florUpDto.corPetalas()));
+        assertThat(florResponseDTO.alturaCaule(), is(florUpDto.alturaCaule()));
+        assertThat(florResponseDTO.tipoFlor(), is("Cravo"));
+        assertThat(florResponseDTO.fornecedor(), notNullValue());
     }
 
     @Test
@@ -134,7 +137,7 @@ public class FlorResourceTeste {
                 "Bela Flor",
                 1.5,
                 "Vermelha",
-                0.3D,
+                0.3F,
                 1,
                 1L);
         Long idLong = florService.create(florDTO).id();

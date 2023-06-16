@@ -70,7 +70,7 @@ public class FornecedorResourceTeste {
                 .statusCode(201)
                 .body("id", notNullValue(),
                         "nome", is("L&L"),
-                                                     "país", is("BR"),
+                                                     "pais", is("BR"),
                                                      "safra", is("2023"),
                                                      "volume", is(10F));
     }

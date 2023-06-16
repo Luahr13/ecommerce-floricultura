@@ -35,3 +35,5 @@ insert into fornecedor(nome, pais, safra, volume) values('Braz', 'BR', '2023', 3
 insert into fornecedor(nome, pais, safra, volume) values('L&L', 'BR', '2023', 30);
 insert into fornecedor(nome, pais, safra, volume) values('Flora', 'BR', '2023', 30);
 insert into fornecedor(nome, pais, safra, volume) values('Girassol', 'BR', '2023', 30);
+
+insert into flor(nome, descricao, valorUnidade, corPetalas, alturaCaule, tipoFlor, id_fornecedor) values('Orquidea', 'Bela Flor', 1.5, 'Vermelha', 0.3, 'ORQUIDEA', 1);

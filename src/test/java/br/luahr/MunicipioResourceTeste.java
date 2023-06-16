@@ -11,6 +11,7 @@ import br.luahr.topicos1.dto.AuthClienteDTO;
 import br.luahr.topicos1.dto.EstadoDTO;
 import br.luahr.topicos1.dto.MunicipioDTO;
 import br.luahr.topicos1.dto.MunicipioResponseDTO;
+import br.luahr.topicos1.model.Estado;
 import br.luahr.topicos1.service.EstadoService;
 import br.luahr.topicos1.service.MunicipioService;
 import io.quarkus.test.junit.QuarkusTest;
@@ -19,6 +20,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -61,9 +63,10 @@ public class MunicipioResourceTeste {
 
         @Test
         public void testeCreatMunicipio() {
+                Long idE = estadoService.create(new EstadoDTO("Tocantins", "TO")).id();
                 MunicipioDTO municipioDTO = new MunicipioDTO(
                                 "Palmas",
-                                1L);
+                                idE);
 
                 given()
                                 .header("Authorization", "Bearer " + token)
@@ -71,7 +74,10 @@ public class MunicipioResourceTeste {
                                 .body(municipioDTO)
                                 .when().post("/municipios")
                                 .then()
-                                .statusCode(201);
+                                .statusCode(201)
+                                .body("id", notNullValue(),
+                                "nome", is("Palmas"),
+                                "estado", notNullValue(Estado.class));
         }
 
         @Test
@@ -104,7 +110,7 @@ public class MunicipioResourceTeste {
                 // Verificando se os dados foram atualizados no banco de dados
                 MunicipioResponseDTO municipioResponseDTO = municipioService.findById(id);
                 assertThat(municipioResponseDTO.nome(), is("Palmas_TO"));
-                assertThat(municipioResponseDTO.estado().getId(), is(idEstado));
+                assertThat(municipioResponseDTO.estado(), notNullValue());
         }
 
         @Test

@@ -1,8 +1,6 @@
 package br.luahr.topicos1.dto;
 
 import br.luahr.topicos1.model.Flor;
-import br.luahr.topicos1.model.Fornecedor;
-import br.luahr.topicos1.model.TipoFlor;
 
 public record FlorResponseDTO(
     Long id,
@@ -10,9 +8,9 @@ public record FlorResponseDTO(
     String descricao,
     Double valorUnidade,
     String corPetalas,
-    Double alturaCaule,
-    TipoFlor tipoFlor,
-    Fornecedor fornecedor
+    Float alturaCaule,
+    String tipoFlor,
+    FornecedorResponseDTO fornecedor
 ) {
     public FlorResponseDTO(Flor flor) {
         this(
@@ -22,8 +20,8 @@ public record FlorResponseDTO(
             flor.getValorUnidade(),
             flor.getCorPetalas(),
             flor.getAlturaCaule(),
-            flor.getTipoFlor(),
-            flor.getFornecedor()
+            flor.getTipoFlor().getLabel(),
+            new FornecedorResponseDTO(flor.getFornecedor())
         );
     }
 }
