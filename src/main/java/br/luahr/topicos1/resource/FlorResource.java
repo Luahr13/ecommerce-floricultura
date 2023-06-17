@@ -2,6 +2,8 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,28 +32,36 @@ public class FlorResource {
     @Inject
     FlorService florService;
 
+    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+
     @GET
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ "Admin", "User" })
     public List<FlorResponseDTO> getAll() {
-         return florService.getAll();
+        LOG.info("Buscando Flores.");
+        LOG.debug("Debug de busca de lista de flores.");
+        return florService.getAll();
     }
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"Admin", "User"})
+    @RolesAllowed({ "Admin", "User" })
     public FlorResponseDTO findById(@PathParam("id") Long id) {
+        LOG.info("Buscando ID de flores.");
+        LOG.debug("Debug de busca de ID de flores.");
         return florService.findById(id);
     }
 
     @POST
     @Transactional
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ "Admin" })
     public Response insert(FlorDTO florDTO) {
+        LOG.info("Inserindo uma flor.");
         try {
             FlorResponseDTO flor = florService.create(florDTO);
             return Response.status(Status.CREATED).entity(flor).build();
-        } catch(ConstraintViolationException e) {
+        } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de inserção de flores.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -61,36 +71,42 @@ public class FlorResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ "Admin" })
     public Response update(@PathParam("id") Long id, FlorDTO florDTO) {
+        LOG.info("Atualiza uma flor.");
         try {
             FlorResponseDTO flor = florService.update(id, florDTO);
             return Response.ok(flor).build();
-        } catch(ConstraintViolationException e) {
+        } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de updat de flores.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {
+        LOG.info("deleta uma flor.");
         florService.delete(id);
+        LOG.debug("Debug de deletar flores.");
         return Response.status(Status.NO_CONTENT).build();
     }
 
     @GET
     @Path("/count")
-    @RolesAllowed({"Admin", "User"})
-    public long count(){
+    @RolesAllowed({ "Admin", "User" })
+    public long count() {
+        LOG.info("Conta flores.");
         return florService.count();
     }
 
     @GET
     @Path("/search/{nome}")
-    @RolesAllowed({"Admin", "User"})
-    public List<FlorResponseDTO> search(@PathParam("nome") String nome){
+    @RolesAllowed({ "Admin", "User" })
+    public List<FlorResponseDTO> search(@PathParam("nome") String nome) {
+        LOG.info("Busca nome de flores.");
         return florService.findByNome(nome);
     }
 }

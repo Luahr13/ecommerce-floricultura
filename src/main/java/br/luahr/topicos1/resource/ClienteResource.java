@@ -39,8 +39,8 @@ public class ClienteResource {
     @RolesAllowed({"Admin", "User"})
     public List<ClienteResponseDTO> getAll() {
         LOG.info("Buscando todos os clientes.");
-        LOG.debug("ERRO DE DEBUG.");
-         return clienteService.getAll();
+        LOG.debug("Debug de busca de lista de clientes.");
+        return clienteService.getAll();
     }
 
     @GET
@@ -48,7 +48,7 @@ public class ClienteResource {
     @RolesAllowed({"Admin", "User"})
     public ClienteResponseDTO findById(@PathParam("id") Long id) {
         LOG.info("Buscando um cliente por ID.");
-        LOG.debug("ERRO DE DEBUG.");
+        LOG.debug("Debug de busca de ID de clientes.");
         return clienteService.findById(id);
     }
 
@@ -62,7 +62,7 @@ public class ClienteResource {
             return Response.status(Status.CREATED).entity(cliente).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
-            LOG.debug("ERRO DE DEBUG.");
+            LOG.debug("Debug de inserção de clientes.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -74,11 +74,13 @@ public class ClienteResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response update(@PathParam("id") Long id, ClienteDTO clienteDTO) {
+        LOG.info("Atualiza um cliente.");
         try {
             ClienteResponseDTO cliente = clienteService.update(id, clienteDTO);
             return Response.status(Status.NO_CONTENT).entity(cliente).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de updat de clientes.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -87,7 +89,9 @@ public class ClienteResource {
     @Path("/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.info("deleta um cliente.");
         clienteService.delete(id);
+        LOG.debug("Debug de deletar clientes.");
         return Response.status(Status.NO_CONTENT).build();
     }
 
@@ -95,6 +99,7 @@ public class ClienteResource {
     @Path("/count")
     @RolesAllowed({"Admin", "User"})
     public long count(){
+        LOG.info("Conta clientes.");
         return clienteService.count();
     }
 
@@ -102,6 +107,7 @@ public class ClienteResource {
     @Path("/search/{nome}")
     @RolesAllowed({"Admin", "User"})
     public List<ClienteResponseDTO> search(@PathParam("nome") String nome){
+        LOG.info("Busca nome de clientes.");
         return clienteService.findByNome(nome);
     }
     

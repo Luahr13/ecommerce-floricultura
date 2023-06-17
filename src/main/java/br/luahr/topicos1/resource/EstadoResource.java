@@ -2,6 +2,8 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,9 +32,13 @@ public class EstadoResource {
     @Inject
     EstadoService estadoService;
 
+    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+
     @GET
     @RolesAllowed({ "Admin", "User" })
     public List<EstadoResponseDTO> getAll() {
+        LOG.info("Buscando todos os estados.");
+        LOG.debug("Debug de busca de lista de estados.");
         return estadoService.getAll();
     }
 
@@ -40,6 +46,7 @@ public class EstadoResource {
     @Path("/{id}")
     @RolesAllowed({ "Admin", "User" })
     public EstadoResponseDTO findById(@PathParam("id") Long id) {
+        LOG.info("Buscando ID de estados.");
         return estadoService.findById(id);
     }
 
@@ -47,11 +54,13 @@ public class EstadoResource {
     @Transactional
     @RolesAllowed({ "Admin" })
     public Response insert(EstadoDTO estadoDTO) {
+        LOG.info("Inserindo um estado.");
         try {
             EstadoResponseDTO estado = estadoService.create(estadoDTO);
             return Response.status(Status.CREATED).entity(estado).build();
         } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de inserção de estados.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -63,11 +72,13 @@ public class EstadoResource {
     @Transactional
     @RolesAllowed({ "Admin" })
     public Response update(@PathParam("id") Long id, EstadoDTO estadoDTO) {
+        LOG.info("Atualiza um estado.");
         try {
             estadoService.update(id, estadoDTO);
             return Response.status(Status.NO_CONTENT).build();
         } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de updat de estados.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -76,7 +87,9 @@ public class EstadoResource {
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {
+        LOG.info("deleta um estado.");
         estadoService.delete(id);
+        LOG.debug("Debug de deletar estados.");
         return Response.status(Status.NO_CONTENT).build();
     }
 
@@ -84,6 +97,7 @@ public class EstadoResource {
     @Path("/count")
     @RolesAllowed({ "Admin", "User" })
     public long count() {
+        LOG.info("Conta estados.");
         return estadoService.count();
     }
 
@@ -91,6 +105,7 @@ public class EstadoResource {
     @Path("/search/{nome}")
     @RolesAllowed({ "Admin", "User" })
     public List<EstadoResponseDTO> search(@PathParam("nome") String nome) {
+        LOG.info("Busca nome de estados.");
         return estadoService.findByNome(nome);
     }
 }

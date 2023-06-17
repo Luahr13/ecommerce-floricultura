@@ -2,6 +2,8 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,9 +32,13 @@ public class TelefoneResource {
     @Inject
     TelefoneService telefoneService;
 
+    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+
     @GET
     @RolesAllowed({"Admin", "User"})
     public List<TelefoneResponseDTO> getAll() {
+        LOG.info("Buscando todos os telefones.");
+        LOG.debug("Debug de busca de lista de telefones.");
          return telefoneService.getAll();
     }
 
@@ -40,6 +46,8 @@ public class TelefoneResource {
     @Path("/{id}")
     @RolesAllowed({"Admin", "User"})
     public TelefoneResponseDTO findById(@PathParam("id") Long id) {
+        LOG.info("Buscando um telefone por ID.");
+        LOG.debug("Debug de busca de ID de telefones.");
         return telefoneService.findById(id);
     }
 
@@ -47,11 +55,13 @@ public class TelefoneResource {
     @Transactional
     @RolesAllowed({"Admin"})
     public Response insert(TelefoneDTO telefoneDTO) {
+        LOG.info("Inserindo um telefone.");
         try {
             TelefoneResponseDTO telefone = telefoneService.create(telefoneDTO);
             return Response.status(Status.CREATED).entity(telefone).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de inserção de telefones.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -63,11 +73,13 @@ public class TelefoneResource {
     @Transactional
     @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, TelefoneDTO telefoneDTO) {
+        LOG.info("Atualiza um telefone.");
         try {
             TelefoneResponseDTO telefone = telefoneService.update(id, telefoneDTO);
             return Response.status(Status.NO_CONTENT).entity(telefone).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de updat de telefones.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -76,7 +88,9 @@ public class TelefoneResource {
     @Path("/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.info("deleta um telefone.");
         telefoneService.delete(id);
+        LOG.debug("Debug de deletar telefones.");
         return Response.status(Status.NO_CONTENT).build();
     }
 
@@ -84,6 +98,7 @@ public class TelefoneResource {
     @Path("/count")
     @RolesAllowed({"Admin", "User"})
     public long count(){
+        LOG.info("Conta telefones.");
         return telefoneService.count();
     }
 
@@ -91,6 +106,7 @@ public class TelefoneResource {
     @Path("/search/{nome}")
     @RolesAllowed({"Admin", "User"})
     public List<TelefoneResponseDTO> search(@PathParam("nome") String nome){
+        LOG.info("Busca nome de telefones.");
         return telefoneService.findByNome(nome);
     } 
 }

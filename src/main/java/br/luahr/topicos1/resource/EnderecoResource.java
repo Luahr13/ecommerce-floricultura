@@ -2,6 +2,8 @@ package br.luahr.topicos1.resource;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,9 +32,13 @@ public class EnderecoResource {
     @Inject
     EnderecoService enderecoService;
 
+    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+
     @GET
     @RolesAllowed({"Admin", "User"})
     public List<EnderecoResponseDTO> getAll() {
+        LOG.info("Buscando todos os enderecos.");
+        LOG.debug("Debug de busca de lista de enderecos.");
          return enderecoService.getAll();
     }
 
@@ -40,6 +46,8 @@ public class EnderecoResource {
     @Path("/{id}")
     @RolesAllowed({"Admin", "User"})
     public EnderecoResponseDTO findById(@PathParam("id") Long id) {
+        LOG.info("Buscando um endereco por ID.");
+        LOG.debug("Debug de busca de ID de enderecos.");
         return enderecoService.findById(id);
     }
 
@@ -47,11 +55,13 @@ public class EnderecoResource {
     @Transactional
     @RolesAllowed({"Admin"})
     public Response insert(EnderecoDTO enderecoDTO) {
+        LOG.info("Inserindo um endereco.");
         try {
             EnderecoResponseDTO endereco = enderecoService.create(enderecoDTO);
             return Response.status(Status.CREATED).entity(endereco).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de inserção de enderecos.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -63,11 +73,13 @@ public class EnderecoResource {
     @Transactional
     @RolesAllowed({"Admin"})
     public Response update(@PathParam("id") Long id, EnderecoDTO enderecoDTO) {
+        LOG.info("Atualiza um endereco.");
         try {
             enderecoService.update(id, enderecoDTO);
             return Response.status(Status.NO_CONTENT).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
+            LOG.debug("Debug de updat de enderecos.");
             return Response.status(Status.NOT_FOUND).entity(result).build();
         }
     }
@@ -76,7 +88,9 @@ public class EnderecoResource {
     @Path("/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.info("deleta um endereco.");
         enderecoService.delete(id);
+        LOG.debug("Debug de deletar enderecos.");
         return Response.status(Status.NO_CONTENT).build();
     }
 
@@ -84,6 +98,7 @@ public class EnderecoResource {
     @Path("/count")
     @RolesAllowed({"Admin", "User"})
     public long count(){
+        LOG.info("Conta enderecos.");
         return enderecoService.count();
     }
 
@@ -91,6 +106,7 @@ public class EnderecoResource {
     @Path("/search/{nome}")
     @RolesAllowed({"Admin", "User"})
     public List<EnderecoResponseDTO> search(@PathParam("nome") String nome){
+        LOG.info("Busca nome de enderecos.");
         return enderecoService.findByNome(nome);
     }
 }
