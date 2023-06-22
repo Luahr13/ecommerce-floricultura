@@ -32,7 +32,7 @@ public class FlorResource {
     @Inject
     FlorService florService;
 
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+    private static final Logger LOG = Logger.getLogger(FlorResource.class);
 
     @GET
     @RolesAllowed({ "Admin", "User" })

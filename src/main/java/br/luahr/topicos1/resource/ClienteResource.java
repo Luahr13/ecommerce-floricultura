@@ -33,7 +33,7 @@ public class ClienteResource {
     @Inject
     ClienteService clienteService;
 
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+    private static final Logger LOG = Logger.getLogger(ClienteResource.class);
 
     @GET
     @RolesAllowed({"Admin", "User"})

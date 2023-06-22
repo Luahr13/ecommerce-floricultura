@@ -32,7 +32,7 @@ public class EstadoResource {
     @Inject
     EstadoService estadoService;
 
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+    private static final Logger LOG = Logger.getLogger(EstadoResource.class);
 
     @GET
     @RolesAllowed({ "Admin", "User" })

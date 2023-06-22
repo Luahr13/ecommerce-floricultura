@@ -32,7 +32,7 @@ public class EnderecoResource {
     @Inject
     EnderecoService enderecoService;
 
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+    private static final Logger LOG = Logger.getLogger(EnderecoResource.class);
 
     @GET
     @RolesAllowed({"Admin", "User"})

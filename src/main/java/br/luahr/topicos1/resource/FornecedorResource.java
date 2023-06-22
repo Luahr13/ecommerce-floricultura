@@ -32,7 +32,7 @@ public class FornecedorResource {
     @Inject
     FornecedorService fornecedorService;
 
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+    private static final Logger LOG = Logger.getLogger(FornecedorResource.class);
 
     @GET
     @RolesAllowed({"Admin", "User"})

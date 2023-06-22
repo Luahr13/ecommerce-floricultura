@@ -32,7 +32,7 @@ public class TelefoneResource {
     @Inject
     TelefoneService telefoneService;
 
-    private static final Logger LOG = Logger.getLogger(MunicipioResource.class);
+    private static final Logger LOG = Logger.getLogger(TelefoneResource.class);
 
     @GET
     @RolesAllowed({"Admin", "User"})
