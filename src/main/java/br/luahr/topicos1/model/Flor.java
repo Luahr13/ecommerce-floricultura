@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 public class Flor extends Produto{
     private String corPetalas;
     private Float alturaCaule;
+    private String nomeImagem;
 
     @Enumerated(EnumType.STRING)
     private TipoFlor tipoFlor;
@@ -49,4 +50,13 @@ public class Flor extends Produto{
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
+    }
+
 }

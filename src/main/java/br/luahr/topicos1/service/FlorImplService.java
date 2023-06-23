@@ -125,5 +125,11 @@ public class FlorImplService implements FlorService{
     public long count() {
         return florRepository.count();
     }
+
+    @Override
+    public Flor updateImg(Long id, String nomeImagem) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateImg'");
+    }
     
 }

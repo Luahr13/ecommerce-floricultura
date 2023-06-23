@@ -10,7 +10,8 @@ public record FlorResponseDTO(
     String corPetalas,
     Float alturaCaule,
     String tipoFlor,
-    FornecedorResponseDTO fornecedor
+    FornecedorResponseDTO fornecedor,
+    String nomeImagem
 ) {
     public FlorResponseDTO(Flor flor) {
         this(
@@ -21,7 +22,8 @@ public record FlorResponseDTO(
             flor.getCorPetalas(),
             flor.getAlturaCaule(),
             flor.getTipoFlor().getLabel(),
-            new FornecedorResponseDTO(flor.getFornecedor())
+            new FornecedorResponseDTO(flor.getFornecedor()),
+            flor.getNomeImagem()
         );
     }
 }
