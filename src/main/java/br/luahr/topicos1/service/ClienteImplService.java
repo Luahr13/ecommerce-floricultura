@@ -109,15 +109,6 @@ public class ClienteImplService implements ClienteService {
         return new ClienteResponseDTO(entity);
     }
 
-    private void validar(ClienteDTO clienteDTO) throws ConstraintViolationException {
-
-        Set<ConstraintViolation<ClienteDTO>> violations = validator.validate(clienteDTO);
-
-        if (!violations.isEmpty())
-            throw new ConstraintViolationException(violations);
-
-    }
-
     @Override
     @Transactional
     public void delete(Long id) throws IllegalArgumentException, NotFoundException {
@@ -170,5 +161,14 @@ public class ClienteImplService implements ClienteService {
         cliente.setNomeImagem(nomeImagem);
 
         return new ClienteResponseDTO(cliente);
+    }
+
+    //validações
+    private void validar(ClienteDTO clienteDTO) throws ConstraintViolationException {
+
+        Set<ConstraintViolation<ClienteDTO>> violations = validator.validate(clienteDTO);
+
+        if (!violations.isEmpty())
+            throw new ConstraintViolationException(violations);
     }
 }
