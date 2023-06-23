@@ -39,7 +39,6 @@ public class ClienteLogadoResource {
     @GET
     @RolesAllowed({ "Admin", "User" })
     public Response getUsuario() {
-
         // obtendo o login a partir do token
         String login = jwt.getSubject();
         ClienteResponseDTO clienteResponseDTO = clienteService.findByLogin(login);

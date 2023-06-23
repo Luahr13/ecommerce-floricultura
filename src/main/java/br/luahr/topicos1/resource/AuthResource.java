@@ -47,8 +47,5 @@ public class AuthResource {
         return Response.ok()
             .header("Authorization", tokenService.generateJwt(cliente))
             .build();
-        
     }
-
-    
 }
