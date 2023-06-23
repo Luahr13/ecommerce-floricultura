@@ -82,6 +82,8 @@ public class ClienteResourceTeste {
                 Long idEndereco = enderecoService.create(new EnderecoDTO("Norte", "13", "QI05", "77002-023", idMunicipio)).id();
                 ClienteDTO clienteDTO = new ClienteDTO(
                                 "Luahr",
+                                "luahr",
+                                "123",
                                 "11111111111-11",
                                 1,
                                 idTelefone,
@@ -109,6 +111,8 @@ public class ClienteResourceTeste {
                 Long idEndereco = enderecoService.create(new EnderecoDTO("Norte", "13", "QI05", "77002-023", idMunicipio)).id();
                 ClienteDTO clienteDTO = new ClienteDTO(
                                 "Luahr",
+                                "luahr",
+                                "123",
                                 "11111111111-11",
                                 1,
                                 idTelefone,
@@ -116,6 +120,8 @@ public class ClienteResourceTeste {
                 Long idLong = clienteService.create(clienteDTO).id();
                 ClienteDTO clienteUpDto = new ClienteDTO(
                                 "Luahr",
+                                "luahr",
+                                "123",
                                 "11111111111-22",
                                 1,
                                 idTelefone,
@@ -129,6 +135,7 @@ public class ClienteResourceTeste {
                                 .statusCode(204);
                 ClienteResponseDTO clienteResponseDTO = clienteService.findById(idLong);
                 assertThat(clienteResponseDTO.nome(), is("Luahr"));
+                assertThat(clienteResponseDTO.login(), is("luahr"));
                 assertThat(clienteResponseDTO.cpf(), is("11111111111-22"));
                 assertThat(clienteResponseDTO.sexo(), notNullValue());
                 assertThat(clienteResponseDTO.telefone(), notNullValue());
@@ -143,6 +150,8 @@ public class ClienteResourceTeste {
                 Long idEndereco = enderecoService.create(new EnderecoDTO("Norte", "13", "QI05", "77002-023", idMunicipio)).id();
                 ClienteDTO clienteDTO = new ClienteDTO(
                                 "Luahr",
+                                "luahr",
+                                "123",
                                 "11111111111-11",
                                 1,
                                 idTelefone,

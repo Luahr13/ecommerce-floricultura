@@ -25,7 +25,7 @@ insert into telefone (codigoArea, numero) values('62', '(62) 33333-3333');
 insert into telefone (codigoArea, numero) values('11', '(62) 44444-4444');
 
 insert into cliente (nome, login, senha, cpf, sexo, id_endereco, id_telefone) values('Jânio', 'janio', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', '11111111111-11', 'MASCULINO', 1, 1);
-insert into cliente (nome, cpf, sexo, id_telefone, id_endereco) values('Luahr', '22222222222-22', 'MASCULINO', 2, 2);
+insert into cliente (nome, login, senha, cpf, sexo, id_telefone, id_endereco) values('Luahr', 'luahr', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', '22222222222-22', 'MASCULINO', 2, 2);
 insert into cliente (nome, cpf, sexo, id_telefone, id_endereco) values('Jânio', '33333333333-33', 'MASCULINO', 3, 3);
 insert into cliente (nome, cpf, sexo, id_telefone, id_endereco) values('Leandra', '44444444444-44', 'FEMININO', 4, 4);
 

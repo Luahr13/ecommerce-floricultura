@@ -23,6 +23,9 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
+@Path("/usuariologado")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class ClienteLogadoResource {
     @Inject
     JsonWebToken jwt;
@@ -53,11 +56,9 @@ public class ClienteLogadoResource {
 
         try {
             nomeImagem = fileService.salvarImagemUsuario(form.getImagem(), form.getNomeImagem());
-
         } catch (IOException e) {
             Result result = new Result(e.getMessage());
             return Response.status(Status.CONFLICT).entity(result).build();
-
         }
 
         String login = jwt.getSubject();

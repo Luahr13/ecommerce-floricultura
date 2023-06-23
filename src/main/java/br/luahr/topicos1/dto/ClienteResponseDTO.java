@@ -8,6 +8,7 @@ import br.luahr.topicos1.model.Sexo;
 public record ClienteResponseDTO(
     Long id,
     String nome,
+    String login,
     String cpf,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,18 +16,16 @@ public record ClienteResponseDTO(
     TelefoneResponseDTO telefone,
     EnderecoResponseDTO endereco,
 
-    String login,
-
     String nomeImagem
 ) {
     public ClienteResponseDTO (Cliente cliente){
             this(cliente.getId(),
                 cliente.getNome(),
+                cliente.getLogin(),
                 cliente.getCpf(),
                 cliente.getSexo(),
                 new TelefoneResponseDTO(cliente.getTelefone()),
                 new EnderecoResponseDTO(cliente.getEndereco()),
-                cliente.getLogin(),
                 cliente.getNomeImagem()
                 );
     }

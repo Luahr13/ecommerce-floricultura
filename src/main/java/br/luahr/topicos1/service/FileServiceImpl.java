@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class FileServiceImpl implements FileService {
 
-    private final String PATH_USER = System.getProperty("user.home")
-            + File.separator + "quarkus"
-            + File.separator + "images"
-            + File.separator + "usuario" + File.separator;
+    private final String PATH_USER = "C:\\Users\\Luahr\\Documents\\GitHub\\ecommerce-floricultura\\src\\main\\resources\\imagens" + File.separator;
 
     @Override
     public String salvarImagemUsuario(byte[] imagem, String nomeImagem) throws IOException {

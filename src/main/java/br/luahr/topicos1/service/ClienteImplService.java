@@ -40,6 +40,9 @@ public class ClienteImplService implements ClienteService {
     @Inject
     Validator validator;
 
+    @Inject
+    HashServiceImpl hashServiceImpl;
+
     @Override
     public List<ClienteResponseDTO> getAll() {
         return clienteRepository.findAll()
@@ -63,6 +66,9 @@ public class ClienteImplService implements ClienteService {
 
         var entity = new Cliente();
         entity.setNome(clienteDTO.nome());
+        entity.setLogin(clienteDTO.login());
+
+        entity.setSenha(hashServiceImpl.getHashSenha(clienteDTO.senha()));
         entity.setCpf(clienteDTO.cpf());
 
         Integer idSexo = clienteDTO.idSexo(); // Obtém o idSexo do DTO
