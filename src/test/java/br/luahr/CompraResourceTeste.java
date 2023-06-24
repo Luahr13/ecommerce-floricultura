@@ -17,6 +17,7 @@ import br.luahr.topicos1.dto.TelefoneDTO;
 import br.luahr.topicos1.model.Cliente;
 import br.luahr.topicos1.model.Produto;
 import br.luahr.topicos1.service.ClienteService;
+import br.luahr.topicos1.service.CompraService;
 import br.luahr.topicos1.service.EnderecoService;
 import br.luahr.topicos1.service.EstadoService;
 import br.luahr.topicos1.service.FlorService;
@@ -58,6 +59,9 @@ public class CompraResourceTeste {
     @Inject
     TelefoneService telefoneService;
 
+    @Inject
+    CompraService compraService;
+
     @BeforeEach
     public void setUp() {
         var auth = new AuthClienteDTO("janio", "123");
@@ -91,9 +95,11 @@ public class CompraResourceTeste {
 
         Long idTelefone = telefoneService.create(new TelefoneDTO("63", "(63) 99999-9999")).id();
 
-        Long idCliente = clienteService.create(new ClienteDTO("Luahr", "luahr", "123", "11111111111-11", 1, idTelefone, idEndereco)).id();
+        Long idCliente = clienteService
+                .create(new ClienteDTO("Luahr", "luahr", "123", "11111111111-11", 1, idTelefone, idEndereco)).id();
         Long idFornecedor = fornecedorService.create(new FornecedorDTO("L&L", "BR", "2023", 10F)).id();
-        Long idProduto = florService.create(new FlorDTO("Orquidea", "Bela Flor", 1.5, "Vermelha", 0.3F, 1, idFornecedor)).id();
+        Long idProduto = florService
+                .create(new FlorDTO("Orquidea", "Bela Flor", 1.5, "Vermelha", 0.3F, 1, idFornecedor)).id();
 
         Integer quantiProd = 10;
         CompraDTO compraDTO = new CompraDTO(idCliente, idProduto, quantiProd, 10D);
