@@ -8,6 +8,7 @@ import br.luahr.topicos1.model.Sexo;
 public record ClienteResponseDTO(
     Long id,
     String nome,
+
     String login,
     String cpf,
 

@@ -66,13 +66,15 @@ public class ClienteImplService implements ClienteService {
 
         var entity = new Cliente();
         entity.setNome(clienteDTO.nome());
+
         entity.setLogin(clienteDTO.login());
 
         entity.setSenha(hashServiceImpl.getHashSenha(clienteDTO.senha()));
         entity.setCpf(clienteDTO.cpf());
 
         Integer idSexo = clienteDTO.idSexo(); // Obtém o idSexo do DTO
-        Sexo sexo = idSexo != null ? Sexo.valueOf(idSexo) : null; // Converte para Sexo, considerando null quando idSexo for null
+        Sexo sexo = idSexo != null ? Sexo.valueOf(idSexo) : null; // Converte para Sexo, considerando null quando idSexo
+                                                                  // for null
         entity.setSexo(sexo); // Seta o sexo no cliente
 
         Telefone telefone = telefoneRepository.findById(clienteDTO.idTelefone());
@@ -96,7 +98,8 @@ public class ClienteImplService implements ClienteService {
         entity.setCpf(clienteDTO.cpf());
 
         Integer idSexo = clienteDTO.idSexo(); // Obtém o idSexo do DTO
-        Sexo sexo = idSexo != null ? Sexo.valueOf(idSexo) : null; // Converte para Sexo, considerando null quando idSexo for null
+        Sexo sexo = idSexo != null ? Sexo.valueOf(idSexo) : null; // Converte para Sexo, considerando null quando idSexo
+                                                                  // for null
         entity.setSexo(sexo); // Seta o sexo no cliente
 
         if (!clienteDTO.idTelefone().equals(entity.getTelefone().getId())) {
@@ -163,7 +166,7 @@ public class ClienteImplService implements ClienteService {
         return new ClienteResponseDTO(cliente);
     }
 
-    //validações
+    // validações
     private void validar(ClienteDTO clienteDTO) throws ConstraintViolationException {
 
         Set<ConstraintViolation<ClienteDTO>> violations = validator.validate(clienteDTO);

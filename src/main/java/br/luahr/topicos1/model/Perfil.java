@@ -31,8 +31,5 @@ public enum Perfil {
                 return perfil;
         } 
         throw new IllegalArgumentException("Id inválido:" + id);
-    }
-
-    
-    
+    } 
 }
